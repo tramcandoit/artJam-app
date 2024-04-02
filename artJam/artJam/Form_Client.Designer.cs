@@ -166,6 +166,7 @@
             this.Controls.Add(this.panel_canvas);
             this.Name = "Form_Client";
             this.Text = "Client";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Client_FormClosed);
             this.panel_canvas.ResumeLayout(false);
             this.panel_color.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
