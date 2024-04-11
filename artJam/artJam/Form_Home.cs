@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace artJam
 {
@@ -16,6 +20,7 @@ namespace artJam
         {
             InitializeComponent();
         }
+        #region Khởi tạo giao diện
         private void button_start_Click(object sender, EventArgs e)
         {
             this.button_start.Visible = false;
@@ -49,6 +54,7 @@ namespace artJam
             this.label_nickname.Visible = true;
             this.label_code_room.Visible = false;
         }
+        #endregion
 
         private void button_go_create_room_Click(object sender, EventArgs e)
         {
@@ -57,12 +63,11 @@ namespace artJam
                 MessageBox.Show("Vui lòng nhập nickname");
                 return;
             }
-            else
-            {
-                this.Hide();
-                Form_Client Client = new Form_Client();
-                Client.ShowDialog();
-            } 
+
+            this.Hide();
+
+            string username = richTextBox_nickname.Text;
+            go_to_canvas(0, username);
         }
 
         private void button_go_join_room_Click(object sender, EventArgs e)
@@ -72,12 +77,18 @@ namespace artJam
                 MessageBox.Show("Vui lòng nhập nickname và mã phòng");
                 return;
             }
-            else
-            {
-                this.Hide();
-                Form_Client Client = new Form_Client();
-                Client.ShowDialog();
-            }
+
+            this.Hide();
+
+            string username = richTextBox_nickname.Text;
+            string roomID = richTextBox_code_room.Text;
+            go_to_canvas(1, username, roomID);
+        }
+
+        void go_to_canvas(int code, string username,  string roomID = "")
+        {
+            Form_Client canvas = new Form_Client(code, username, roomID);
+            canvas.Show();
         }
     }
 }

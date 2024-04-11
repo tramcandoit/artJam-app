@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
+using System.Text;
+using System.Runtime.CompilerServices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace artJam
 {
@@ -22,24 +25,106 @@ namespace artJam
         int cursorY = -1;
         Point p = new Point();
 
-        public Form_Client()
+        TcpClient client;
+        StreamReader reader;
+        StreamWriter writer;
+        Packet this_client_info;
+
+        public Form_Client(int code, string username, string roomID)
         {
             InitializeComponent();
-
-            CheckForIllegalCrossThreadCalls = false;
-            Connect();
 
             // Tạo bảng vẽ và bút
             graphics = panel_canvas.CreateGraphics();
             cursorPen = new Pen(Color.Black, 7);
             PenOptimizer();
+
+            this_client_info = new Packet()
+            {
+                Code = code,
+                Username = username,
+                RoomID = roomID
+            };
         }
 
-        public void PenOptimizer()
+        private void Form_Client_Load(object sender, EventArgs e)
         {
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            cursorPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            cursorPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+            try
+            {
+                client = new TcpClient("127.0.0.1", 51888);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            NetworkStream stream = client.GetStream();
+            reader = new StreamReader(stream, System.Text.Encoding.UTF8);
+            writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
+
+            sendToServer(this_client_info);
+
+            Thread listen = new Thread(Receive);
+            listen.IsBackground = true;
+            listen.Start();
+        }
+
+        private void Receive()
+        {
+            bool stop = false;
+            while (!stop)
+            {
+                string responseInJson = null;
+                try
+                {
+                    responseInJson = reader.ReadLine();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                if (responseInJson == null)
+                {
+                    stop = true;
+                    // remove client
+                }
+
+                Packet response = JsonConvert.DeserializeObject<Packet>(responseInJson);
+
+                switch (response.Code)
+                {
+                    case 0:
+                        generate_room_status(response);
+                        break;
+                    case 1:
+                        join_room_status(response);
+                        break;
+                    case 2:
+                        draw_graphics_handler(response);
+                        break;
+                }
+            }
+        }
+
+        void generate_room_status(Packet response)
+        {
+            this_client_info.RoomID = response.RoomID;
+        }
+
+        void join_room_status(Packet response)
+        {
+
+        }
+
+        void draw_graphics_handler(Packet response)
+        {
+            Pen p = new Pen(Color.FromName(response.PenColor), 7);
+
+            int length = response.Points_1.ToArray().Length;
+            for (int i = 0; i < length; i++)
+            {
+                graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+            }
         }
 
         private void pictureBox_black_Click(object sender, EventArgs e)
@@ -81,111 +166,46 @@ namespace artJam
             cursorX = -1;
             cursorY = -1;
 
-            // Gọi hàm gửi 2 points và reset giá trị cho event MouseMove tiếp theo
-            Send(points_1, points_2);
+            Packet messsage = new Packet
+            {
+                Code = 2,
+                Username = this_client_info.Username,
+                RoomID = this_client_info.RoomID,
+                PenColor = cursorPen.Color.ToString(),
+                Points_1 = points_1,
+                Points_2 = points_2
+            };
+            sendToServer(messsage);
+
             points_1.Clear();
             points_2.Clear();
         }
 
-        IPEndPoint IP;
-        Socket client;
-
-        void Connect()
+        private void PenOptimizer()
         {
-            IP = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9999);
-            client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            cursorPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+            cursorPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+        }
 
+        private void sendToServer(Packet message)
+        {
+            string messageInJson = JsonConvert.SerializeObject(message);
             try
             {
-                client.Connect(IP);
+                writer.WriteLine(messageInJson);
+                writer.Flush();
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Không thể kết nối đến server!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show(ex.Message);
             }
-
-            Thread listen = new Thread(Receive);
-            listen.IsBackground = true;
-            listen.Start();
-        }
-        void Send(List<Point> points_1, List<Point> points_2)
-        {
-            // chọn 2 thuộc tính Color và Width của Pen để gửi
-            object penDataObject = new object[] { cursorPen.Color, cursorPen.Width };
-
-            // 3 object -> pen, point, point -> tuple -> string -> byte 
-            var combinedObject = Tuple.Create(penDataObject, points_1, points_2);
-            string json = JsonConvert.SerializeObject(combinedObject); // seriallize Tuple sang Json
-
-            client.Send(Serialize(json));  // Seriallize Json sang byte
-        }
-
-        // Tạo class PenInfo để nhận giá trị Deserialized
-        public class PenInfo
-        {
-            public IList<string> Item1 { get; set; }
-            public IList<string> Item2 { get; set; }
-            public IList<string> Item3 { get; set; }
-        }
-        void Receive()
-        {
-            try
-            {
-                while (true)
-                {
-                    byte[] data = new byte[1024 * 5000];
-                    client.Receive(data);
-
-                    string str0 = (string)Deserialize(data);                        // Deseriallize byte sang string
-                    string str1 = JsonConvert.DeserializeObject(str0).ToString();   // Deseriallize string sang Json
-                    string json = string.Format(@"{0}", str1);
-                    PenInfo info = JsonConvert.DeserializeObject<PenInfo>(json);    // Deseriallize Json sang PenInfo
-
-                    // Nhận các thuộc tính của Pen và khởi tạo Pen mới
-                    float penWidth = 0;
-                    float.TryParse(info.Item1[1], out penWidth);
-                    Pen p = new Pen(Color.FromName(info.Item1[0]), penWidth);
-
-                    // Vẽ tất cả các điểm có trong 2 list được truyền vào
-                    int length = info.Item2.ToArray().Length;
-                    for (int i = 0; i < length; i++)
-                    {
-                        string[] coords = info.Item2[i].Split(',');
-                        Point p1 = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
-
-                        coords = info.Item3[i].Split(',');
-                        Point p2 = new Point(int.Parse(coords[0]), int.Parse(coords[1]));
-
-                        graphics.DrawLine(p, p1, p2);
-                    }
-                }
-            }
-            catch
-            {
-                client.Close();
-            }
-        }
-        byte[] Serialize(object obj)
-        {
-            MemoryStream stream = new MemoryStream();
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            formatter.Serialize(stream, obj);
-
-            return stream.ToArray();
-        }
-        object Deserialize(byte[] data)
-        {
-            MemoryStream stream = new MemoryStream(data);
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            return formatter.Deserialize(stream);
         }
 
         private void Form_Client_FormClosed(object sender, FormClosedEventArgs e)
         {
             client.Close();
+            Application.OpenForms["Form_Home"].Close();
         }
     }
 }
