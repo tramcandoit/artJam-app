@@ -43,7 +43,6 @@ namespace artJam
             cursorPen = new Pen(Color.Black, 7);
             PenOptimizer();
 
-
             this_client_info = new Packet()
             {
                 Code = code,
@@ -51,8 +50,6 @@ namespace artJam
                 RoomID = roomID
             };
         }
-
-
 
         private void Form_Client_Load(object sender, EventArgs e)
         {
@@ -124,21 +121,11 @@ namespace artJam
 
         }
 
-        private async Task drawLine(Packet response)
-        {
-            Pen p = new Pen(Color.FromName(response.PenColor), 7);
-
-            int length = response.Points_1.ToArray().Length;
-
-            await Task.Run(() =>
-            {
-                for (int i = 0; i < length; i++)
-                {
-                    graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
-                    Task.WaitAll();
-                }
-            });
-        }
+        //SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
+        //context.Send(s =>
+        //    {
+                
+        //    }, null);
 
         void draw_graphics_handler(Packet response)
         {
@@ -149,7 +136,6 @@ namespace artJam
             for (int i = 0; i < length; i++)
             {
                 graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
-                //Task.WaitAll();
             }
         }
 
@@ -198,7 +184,7 @@ namespace artJam
                 Code = 2,
                 Username = this_client_info.Username,
                 RoomID = this_client_info.RoomID,
-                PenColor = cursorPen.Color.ToString(),
+                PenColor = cursorPen.Color.Name,
                 Points_1 = points_1,
                 Points_2 = points_2
             };
