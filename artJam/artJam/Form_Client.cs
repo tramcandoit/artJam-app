@@ -12,23 +12,25 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Runtime.CompilerServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.ComponentModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace artJam
 {
     public partial class Form_Client : Form
     {
         // Khởi tạo các giá trị cho bảng vẽ
-        Graphics graphics;
-        Boolean cursorMoving = false;
-        Pen cursorPen;
-        int cursorX = -1;
-        int cursorY = -1;
-        Point p = new Point();
+        private Graphics graphics;
+        private Boolean cursorMoving = false;
+        private Pen cursorPen;
+        private int cursorX = -1;
+        private int cursorY = -1;
+        private Point p = new Point();
 
-        TcpClient client;
-        StreamReader reader;
-        StreamWriter writer;
-        Packet this_client_info;
+        private TcpClient client;
+        private StreamReader reader;
+        private StreamWriter writer;
+        private Packet this_client_info;
 
         public Form_Client(int code, string username, string roomID)
         {
@@ -51,7 +53,7 @@ namespace artJam
         {
             try
             {
-                client = new TcpClient("127.0.0.1", 51888);
+                client = new TcpClient("127.0.0.1", 9999);
             }
             catch (Exception ex)
             {
@@ -71,38 +73,33 @@ namespace artJam
 
         private void Receive()
         {
-            bool stop = false;
-            while (!stop)
+            try
             {
-                string responseInJson = null;
-                try
+                string responseInJson = string.Empty;
+                while (true)
                 {
                     responseInJson = reader.ReadLine();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                if (responseInJson == null)
-                {
-                    stop = true;
-                    // remove client
-                }
 
-                Packet response = JsonConvert.DeserializeObject<Packet>(responseInJson);
+                    Packet response = JsonConvert.DeserializeObject<Packet>(responseInJson);
 
-                switch (response.Code)
-                {
-                    case 0:
-                        generate_room_status(response);
-                        break;
-                    case 1:
-                        join_room_status(response);
-                        break;
-                    case 2:
-                        draw_graphics_handler(response);
-                        break;
+                    switch (response.Code)
+                    {
+                        case 0:
+                            generate_room_status(response);
+                            break;
+                        case 1:
+                            join_room_status(response);
+                            break;
+                        case 2:
+                            draw_graphics_handler(response);
+                            break;
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                client.Close();
             }
         }
 

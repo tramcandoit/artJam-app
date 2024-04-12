@@ -81,6 +81,7 @@
             this.Controls.Add(this.label_room_count);
             this.Name = "Server";
             this.Text = "Server";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Server_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

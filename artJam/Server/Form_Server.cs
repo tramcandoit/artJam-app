@@ -17,7 +17,7 @@ namespace Server
 {
     public partial class Server : Form
     {
-        List<Room> roomList = new List<Room>();        
+        private List<Room> roomList = new List<Room>();        
         private TcpListener listener;
 
         public Server()
@@ -27,7 +27,7 @@ namespace Server
 
         private void button_start_server_Click(object sender, EventArgs e)
         {
-            listener = new TcpListener(new IPEndPoint(IPAddress.Any, 51888));
+            listener = new TcpListener(new IPEndPoint(IPAddress.Any, 9999));
             listener.Start();
             Thread clientListener = new Thread(Listen);
             clientListener.IsBackground = true;
@@ -43,63 +43,57 @@ namespace Server
 
         private void Listen()
         {
-            while (true)
+            try
             {
-                TcpClient client = null;
-                try
+                while (true)
                 {
-                    client = listener.AcceptTcpClient();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                    TcpClient client = listener.AcceptTcpClient();
 
-                Thread receiver = new Thread(Receive);
-                receiver.IsBackground = true;
-                receiver.Start(client);
+                    Thread receiver = new Thread(Receive);
+                    receiver.IsBackground = true;
+                    receiver.Start(client);
+                }
+            }
+            catch (Exception ex)
+            {
+                listener = new TcpListener(new IPEndPoint(IPAddress.Any, 9999));
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void Receive(object obj)
         {
-            TcpClient client = (TcpClient)obj;
+            TcpClient client = obj as TcpClient;
             User user = new User(client);
 
-            bool stop = false;
-            while(!stop)
+            try
             {
-                string requestInJson = null;
-                try
+                string requestInJson = string.Empty;
+                while (true)
                 {
                     requestInJson = user.Reader.ReadLine();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                if (requestInJson == null && client.Connected == true)
-                {
-                    stop = true;
-                    // remove client
-                }
 
-                Packet request = JsonConvert.DeserializeObject<Packet>(requestInJson);
+                    Packet request = JsonConvert.DeserializeObject<Packet>(requestInJson);
 
-                switch (request.Code)
-                {
-                    case 0:
-                        generate_room_handler(user, request);
-                        break;
-                    case 1:
-                        join_room_handler(user, request);
-                        break;
-                    case 2:
-                        send_graphics_handler(user, request, requestInJson);
-                        break;
+                    switch (request.Code)
+                    {
+                        case 0:
+                            generate_room_handler(user, request);
+                            break;
+                        case 1:
+                            join_room_handler(user, request);
+                            break;
+                        case 2:
+                            send_graphics_handler(user, request);
+                            break;
+                    }
                 }
-                //textBox_room_count.Text = roomList.Count.ToString();
-                //client.Close();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                client.Close();
             }
         }
 
@@ -142,7 +136,7 @@ namespace Server
             }
         }
 
-        private void send_graphics_handler(User user, Packet request, string messageInJson)
+        private void send_graphics_handler(User user, Packet request)
         {
             int id = int.Parse(request.RoomID.ToString());
             Room requestingRoom = new Room();
@@ -158,7 +152,7 @@ namespace Server
             {
                 if (_user != user)
                 {
-                    sendSpecific(_user, messageInJson);
+                    sendSpecific(_user, request);
                 }
             }
         }
@@ -175,6 +169,11 @@ namespace Server
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Server_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            listener.Stop();
         }
     }
 }
