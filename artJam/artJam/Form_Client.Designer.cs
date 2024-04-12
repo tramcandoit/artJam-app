@@ -38,6 +38,7 @@
             this.pictureBox_blue = new System.Windows.Forms.PictureBox();
             this.pictureBox_orange = new System.Windows.Forms.PictureBox();
             this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
+            this.textBox_room_code = new System.Windows.Forms.TextBox();
             this.panel_canvas.SuspendLayout();
             this.panel_color.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
@@ -52,6 +53,7 @@
             // 
             // panel_canvas
             // 
+            this.panel_canvas.Controls.Add(this.textBox_room_code);
             this.panel_canvas.Controls.Add(this.panel_color);
             this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_canvas.Location = new System.Drawing.Point(0, 0);
@@ -158,6 +160,15 @@
             this.pictureBox_fuchsia.TabStop = false;
             this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
+            // textBox_room_code
+            // 
+            this.textBox_room_code.Enabled = false;
+            this.textBox_room_code.Location = new System.Drawing.Point(670, 425);
+            this.textBox_room_code.Name = "textBox_room_code";
+            this.textBox_room_code.ReadOnly = true;
+            this.textBox_room_code.Size = new System.Drawing.Size(127, 22);
+            this.textBox_room_code.TabIndex = 1;
+            // 
             // Form_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -169,6 +180,7 @@
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Client_FormClosed);
             this.Load += new System.EventHandler(this.Form_Client_Load);
             this.panel_canvas.ResumeLayout(false);
+            this.panel_canvas.PerformLayout();
             this.panel_color.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).EndInit();
@@ -194,5 +206,6 @@
         private System.Windows.Forms.PictureBox pictureBox_yellow;
         private System.Windows.Forms.PictureBox pictureBox_blue;
         private System.Windows.Forms.PictureBox pictureBox_orange;
+        private System.Windows.Forms.TextBox textBox_room_code;
     }
 }

@@ -12,6 +12,7 @@ using System.Text;
 using Newtonsoft.Json;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading.Tasks;
 
 namespace Server
 {
@@ -23,6 +24,8 @@ namespace Server
         public Server()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
+
         }
 
         private void button_start_server_Click(object sender, EventArgs e)
@@ -101,8 +104,6 @@ namespace Server
         {
             Random r = new Random();
             int roomID = r.Next(1000, 9999);
-
-            MessageBox.Show("Room code: " + roomID);
 
             Room room = new Room();
             room.roomID = roomID;

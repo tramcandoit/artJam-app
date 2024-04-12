@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -20,7 +21,7 @@ namespace artJam
     public partial class Form_Client : Form
     {
         // Khởi tạo các giá trị cho bảng vẽ
-        private Graphics graphics;
+        private static Graphics graphics;
         private Boolean cursorMoving = false;
         private Pen cursorPen;
         private int cursorX = -1;
@@ -35,11 +36,13 @@ namespace artJam
         public Form_Client(int code, string username, string roomID)
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
 
             // Tạo bảng vẽ và bút
             graphics = panel_canvas.CreateGraphics();
             cursorPen = new Pen(Color.Black, 7);
             PenOptimizer();
+
 
             this_client_info = new Packet()
             {
@@ -48,6 +51,8 @@ namespace artJam
                 RoomID = roomID
             };
         }
+
+
 
         private void Form_Client_Load(object sender, EventArgs e)
         {
@@ -65,6 +70,8 @@ namespace artJam
             writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
 
             sendToServer(this_client_info);
+            textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
+            graphics.DrawLine(cursorPen, 0, 0, 100, 100);
 
             Thread listen = new Thread(Receive);
             listen.IsBackground = true;
@@ -106,6 +113,10 @@ namespace artJam
         void generate_room_status(Packet response)
         {
             this_client_info.RoomID = response.RoomID;
+            textBox_room_code.Invoke(new Action(() =>
+            {
+                textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
+            }));
         }
 
         void join_room_status(Packet response)
@@ -113,14 +124,32 @@ namespace artJam
 
         }
 
+        private async Task drawLine(Packet response)
+        {
+            Pen p = new Pen(Color.FromName(response.PenColor), 7);
+
+            int length = response.Points_1.ToArray().Length;
+
+            await Task.Run(() =>
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                    Task.WaitAll();
+                }
+            });
+        }
+
         void draw_graphics_handler(Packet response)
         {
             Pen p = new Pen(Color.FromName(response.PenColor), 7);
 
             int length = response.Points_1.ToArray().Length;
+
             for (int i = 0; i < length; i++)
             {
                 graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                //Task.WaitAll();
             }
         }
 
@@ -152,6 +181,7 @@ namespace artJam
                 points_2.Add(p);
 
                 graphics.DrawLine(cursorPen, new Point(cursorX, cursorY), p);
+
                 cursorX = e.X;
                 cursorY = e.Y;
             }
