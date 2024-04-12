@@ -20,6 +20,7 @@ namespace Server
     {
         private List<Room> roomList = new List<Room>();        
         private TcpListener listener;
+        int userCount = 0;
 
         public Server()
         {
@@ -32,6 +33,7 @@ namespace Server
         {
             listener = new TcpListener(new IPEndPoint(IPAddress.Any, 9999));
             listener.Start();
+            this.button_start_server.Enabled = false ;
             Thread clientListener = new Thread(Listen);
             clientListener.IsBackground = true;
             clientListener.Start();
@@ -113,6 +115,9 @@ namespace Server
 
             roomList.Add(room);
 
+            listView_log.Items.Add(user.Username + " tạo phòng mới. Mã phòng: " + room.roomID);
+            textBox_room_count.Text = (userCount + 1).ToString();
+
             Packet message = new Packet
             {
                 Code = 0,
@@ -135,6 +140,7 @@ namespace Server
                     room.userList.Add(user);
                 }
             }
+            listView_log.Items.Add(request.RoomID + ": " + user.Username + " tham gia");
         }
 
         private void send_graphics_handler(User user, Packet request)
