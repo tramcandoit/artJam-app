@@ -33,6 +33,8 @@ namespace artJam
         private StreamWriter writer;
         private Packet this_client_info;
 
+        int thickness = 5;
+
         public Form_Client(int code, string username, string roomID)
         {
             InitializeComponent();
@@ -40,7 +42,7 @@ namespace artJam
 
             // Tạo bảng vẽ và bút
             graphics = panel_canvas.CreateGraphics();
-            cursorPen = new Pen(Color.Black, 7);
+            cursorPen = new Pen(Color.Black, thickness);
             PenOptimizer();
 
             this_client_info = new Packet()
@@ -125,12 +127,12 @@ namespace artJam
         //SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
         //context.Send(s =>
         //    {
-                
+
         //    }, null);
 
         void draw_graphics_handler(Packet response)
         {
-            Pen p = new Pen(Color.FromName(response.PenColor), 7);
+            Pen p = new Pen(Color.FromName(response.PenColor), thickness);
 
             int length = response.Points_1.ToArray().Length;
 

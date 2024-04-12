@@ -31,6 +31,7 @@
             this.panel_canvas = new System.Windows.Forms.Panel();
             this.textBox_room_code = new System.Windows.Forms.TextBox();
             this.panel_color = new System.Windows.Forms.Panel();
+            this.textBox_username = new System.Windows.Forms.TextBox();
             this.pictureBox_lime = new System.Windows.Forms.PictureBox();
             this.pictureBox_black = new System.Windows.Forms.PictureBox();
             this.pictureBox_cyan = new System.Windows.Forms.PictureBox();
@@ -39,10 +40,7 @@
             this.pictureBox_blue = new System.Windows.Forms.PictureBox();
             this.pictureBox_orange = new System.Windows.Forms.PictureBox();
             this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
-            this.textBox_username = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel_canvas.SuspendLayout();
+            this.pictureBox_pencil = new System.Windows.Forms.PictureBox();
             this.panel_color.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).BeginInit();
@@ -52,16 +50,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_pencil)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_canvas
             // 
             this.panel_canvas.BackColor = System.Drawing.Color.White;
-            this.panel_canvas.Controls.Add(this.panel_color);
-            this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_canvas.Location = new System.Drawing.Point(0, 0);
+            this.panel_canvas.Location = new System.Drawing.Point(0, 75);
             this.panel_canvas.Name = "panel_canvas";
-            this.panel_canvas.Size = new System.Drawing.Size(882, 553);
+            this.panel_canvas.Size = new System.Drawing.Size(881, 480);
             this.panel_canvas.TabIndex = 0;
             this.panel_canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseDown);
             this.panel_canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseMove);
@@ -70,7 +67,7 @@
             // textBox_room_code
             // 
             this.textBox_room_code.Enabled = false;
-            this.textBox_room_code.Location = new System.Drawing.Point(373, 44);
+            this.textBox_room_code.Location = new System.Drawing.Point(740, 38);
             this.textBox_room_code.Name = "textBox_room_code";
             this.textBox_room_code.ReadOnly = true;
             this.textBox_room_code.Size = new System.Drawing.Size(127, 22);
@@ -79,8 +76,7 @@
             // panel_color
             // 
             this.panel_color.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.panel_color.Controls.Add(this.label1);
-            this.panel_color.Controls.Add(this.listView1);
+            this.panel_color.Controls.Add(this.pictureBox_pencil);
             this.panel_color.Controls.Add(this.textBox_username);
             this.panel_color.Controls.Add(this.textBox_room_code);
             this.panel_color.Controls.Add(this.pictureBox_lime);
@@ -91,10 +87,19 @@
             this.panel_color.Controls.Add(this.pictureBox_blue);
             this.panel_color.Controls.Add(this.pictureBox_orange);
             this.panel_color.Controls.Add(this.pictureBox_fuchsia);
-            this.panel_color.Location = new System.Drawing.Point(3, 3);
+            this.panel_color.Location = new System.Drawing.Point(2, 1);
             this.panel_color.Name = "panel_color";
-            this.panel_color.Size = new System.Drawing.Size(876, 73);
+            this.panel_color.Size = new System.Drawing.Size(879, 73);
             this.panel_color.TabIndex = 0;
+            // 
+            // textBox_username
+            // 
+            this.textBox_username.Enabled = false;
+            this.textBox_username.Location = new System.Drawing.Point(740, 11);
+            this.textBox_username.Name = "textBox_username";
+            this.textBox_username.ReadOnly = true;
+            this.textBox_username.Size = new System.Drawing.Size(127, 22);
+            this.textBox_username.TabIndex = 8;
             // 
             // pictureBox_lime
             // 
@@ -176,46 +181,30 @@
             this.pictureBox_fuchsia.TabStop = false;
             this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
-            // textBox_username
+            // pictureBox_pencil
             // 
-            this.textBox_username.Enabled = false;
-            this.textBox_username.Location = new System.Drawing.Point(373, 9);
-            this.textBox_username.Name = "textBox_username";
-            this.textBox_username.ReadOnly = true;
-            this.textBox_username.Size = new System.Drawing.Size(127, 22);
-            this.textBox_username.TabIndex = 8;
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(650, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(217, 65);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.List;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(599, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Online";
+            this.pictureBox_pencil.BackColor = System.Drawing.Color.White;
+            this.pictureBox_pencil.BackgroundImage = global::artJam.Properties.Resources.erase;
+            this.pictureBox_pencil.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox_pencil.Location = new System.Drawing.Point(166, 20);
+            this.pictureBox_pencil.Name = "pictureBox_pencil";
+            this.pictureBox_pencil.Size = new System.Drawing.Size(40, 40);
+            this.pictureBox_pencil.TabIndex = 0;
+            this.pictureBox_pencil.TabStop = false;
+            this.pictureBox_pencil.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
             // Form_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 553);
+            this.Controls.Add(this.panel_color);
             this.Controls.Add(this.panel_canvas);
             this.MaximizeBox = false;
             this.Name = "Form_Client";
             this.Text = "Client";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Client_FormClosed);
             this.Load += new System.EventHandler(this.Form_Client_Load);
-            this.panel_canvas.ResumeLayout(false);
             this.panel_color.ResumeLayout(false);
             this.panel_color.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).EndInit();
@@ -226,6 +215,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_pencil)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -244,7 +234,6 @@
         private System.Windows.Forms.PictureBox pictureBox_orange;
         private System.Windows.Forms.TextBox textBox_room_code;
         private System.Windows.Forms.TextBox textBox_username;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.PictureBox pictureBox_pencil;
     }
 }
