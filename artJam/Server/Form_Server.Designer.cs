@@ -32,6 +32,7 @@
             this.textBox_room_count = new System.Windows.Forms.TextBox();
             this.button_start_server = new System.Windows.Forms.Button();
             this.button_stop_server = new System.Windows.Forms.Button();
+            this.textBox_server_local_IP = new System.Windows.Forms.TextBox();
             this.listView_log = new System.Windows.Forms.ListView();
             this.SuspendLayout();
             // 
@@ -72,6 +73,13 @@
             this.button_stop_server.UseVisualStyleBackColor = true;
             this.button_stop_server.Click += new System.EventHandler(this.button_stop_server_Click);
             // 
+            // textBox_server_local_IP
+            // 
+            this.textBox_server_local_IP.Location = new System.Drawing.Point(491, 160);
+            this.textBox_server_local_IP.Name = "textBox_server_local_IP";
+            this.textBox_server_local_IP.Size = new System.Drawing.Size(152, 22);
+            this.textBox_server_local_IP.TabIndex = 4;
+            // 
             // listView_log
             // 
             this.listView_log.HideSelection = false;
@@ -87,6 +95,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBox_server_local_IP);
             this.Controls.Add(this.listView_log);
             this.Controls.Add(this.button_stop_server);
             this.Controls.Add(this.button_start_server);
@@ -106,6 +115,7 @@
         private System.Windows.Forms.TextBox textBox_room_count;
         private System.Windows.Forms.Button button_start_server;
         private System.Windows.Forms.Button button_stop_server;
+        private System.Windows.Forms.TextBox textBox_server_local_IP;
         private System.Windows.Forms.ListView listView_log;
     }
 }

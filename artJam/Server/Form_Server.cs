@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
+using System.Net.NetworkInformation;
 
 namespace Server
 {
@@ -31,7 +32,9 @@ namespace Server
 
         private void button_start_server_Click(object sender, EventArgs e)
         {
-            listener = new TcpListener(new IPEndPoint(IPAddress.Any, 9999));
+            string ip = GetLocalIPv4(NetworkInterfaceType.Wireless80211);
+            textBox_server_local_IP.Text = ip;
+            listener = new TcpListener(IPAddress.Any, 9999);
             listener.Start();
             this.button_start_server.Enabled = false ;
             Thread clientListener = new Thread(Listen);
@@ -61,7 +64,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                listener = new TcpListener(new IPEndPoint(IPAddress.Any, 9999));
+                listener = new TcpListener(IPAddress.Any, 9999);
                 MessageBox.Show(ex.Message);
             }
         }
@@ -176,6 +179,26 @@ namespace Server
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        // Lấy ra IPv4 của card mạng đang dùng
+        public string GetLocalIPv4(NetworkInterfaceType type)
+        {
+            string localIPv4 = string.Empty;
+            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if (item.NetworkInterfaceType == type && item.OperationalStatus == OperationalStatus.Up)
+                {
+                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
+                    {
+                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                        {
+                            localIPv4 = ip.Address.ToString();
+                        }
+                    }
+                }
+            }
+            return localIPv4;
         }
 
         private void Server_FormClosed(object sender, FormClosedEventArgs e)
