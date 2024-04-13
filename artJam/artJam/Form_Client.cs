@@ -33,7 +33,9 @@ namespace artJam
         private StreamWriter writer;
         private Packet this_client_info;
 
-        public Form_Client(int code, string username, string roomID)
+        private IPEndPoint serverIP;
+
+        public Form_Client(string _serverIP, int code, string username, string roomID)
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
@@ -49,13 +51,16 @@ namespace artJam
                 Username = username,
                 RoomID = roomID
             };
+
+            serverIP = new IPEndPoint(IPAddress.Parse(_serverIP), 9999);
         }
 
         private void Form_Client_Load(object sender, EventArgs e)
         {
             try
             {
-                client = new TcpClient("127.0.0.1", 9999);
+                client = new TcpClient();
+                client.Connect(serverIP);
             }
             catch (Exception ex)
             {

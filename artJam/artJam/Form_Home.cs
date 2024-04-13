@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Net.NetworkInformation;
+
 
 namespace artJam
 {
@@ -19,6 +21,7 @@ namespace artJam
         public Form_Home()
         {
             InitializeComponent();
+
         }
         #region Khởi tạo giao diện
         private void button_start_Click(object sender, EventArgs e)
@@ -67,7 +70,9 @@ namespace artJam
             this.Hide();
 
             string username = richTextBox_nickname.Text;
-            go_to_canvas(0, username);
+            //
+            string serverIP = textBox_server_IP.Text;
+            go_to_canvas(serverIP, 0, username);
         }
 
         private void button_go_join_room_Click(object sender, EventArgs e)
@@ -82,12 +87,15 @@ namespace artJam
 
             string username = richTextBox_nickname.Text;
             string roomID = richTextBox_code_room.Text;
-            go_to_canvas(1, username, roomID);
+            //
+            string serverIP = textBox_server_IP.Text;
+
+            go_to_canvas(serverIP, 1, username, roomID);
         }
 
-        void go_to_canvas(int code, string username,  string roomID = "")
+        void go_to_canvas(string serverIP, int code, string username,  string roomID = "")
         {
-            Form_Client canvas = new Form_Client(code, username, roomID);
+            Form_Client canvas = new Form_Client(serverIP, code, username, roomID);
             canvas.Show();
         }
     }
