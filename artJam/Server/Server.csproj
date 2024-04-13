@@ -55,6 +55,7 @@
     <Compile Include="Form_Server.Designer.cs">
       <DependentUpon>Form_Server.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manager.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

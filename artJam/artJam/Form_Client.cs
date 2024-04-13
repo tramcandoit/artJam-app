@@ -74,7 +74,6 @@ namespace artJam
             sendToServer(this_client_info);
             textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
             textBox_username.Text = "Nickname: " + this_client_info.Username;
-            graphics.DrawLine(cursorPen, 0, 0, 100, 100);
 
             Thread listen = new Thread(Receive);
             listen.IsBackground = true;

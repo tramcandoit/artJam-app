@@ -19,27 +19,28 @@ namespace Server
 {
     public partial class Server : Form
     {
-        private List<Room> roomList = new List<Room>();        
+        private List<Room> roomList = new List<Room>(); 
+        private List<User> userList = new List<User>();
         private TcpListener listener;
-        int userCount = 0;
-
+        Manager Manager;
         public Server()
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
 
+            Manager = new Manager(listView_log, textBox_room_count, textBox_user_count);
         }
 
         private void button_start_server_Click(object sender, EventArgs e)
         {
-            string ip = GetLocalIPv4(NetworkInterfaceType.Wireless80211);
-            textBox_server_local_IP.Text = ip;
             listener = new TcpListener(IPAddress.Any, 9999);
             listener.Start();
             this.button_start_server.Enabled = false ;
             Thread clientListener = new Thread(Listen);
             clientListener.IsBackground = true;
             clientListener.Start();
+
+            Manager.WriteToLog("Server bắt đầu lắng nghe trên cổng 9999...");
         }
 
         private void button_stop_server_Click(object sender, EventArgs e)
@@ -47,6 +48,11 @@ namespace Server
             // close client socket
 
             listener.Stop();
+        }
+
+        private void button_get_server_IP_Click(object sender, EventArgs e)
+        {
+            textBox_server_local_IP.Text = Manager.GetLocalIPv4(NetworkInterfaceType.Wireless80211);
         }
 
         private void Listen()
@@ -73,6 +79,7 @@ namespace Server
         {
             TcpClient client = obj as TcpClient;
             User user = new User(client);
+            userList.Add(user);
 
             try
             {
@@ -107,19 +114,19 @@ namespace Server
 
         private void generate_room_handler(User user, Packet request)
         {
+            user.Username = request.Username;
+
             Random r = new Random();
             int roomID = r.Next(1000, 9999);
+            Room newRoom = new Room();
+            newRoom.roomID = roomID;
 
-            Room room = new Room();
-            room.roomID = roomID;
+            newRoom.userList.Add(user);
+            roomList.Add(newRoom);
 
-            user.Username = request.Username;
-            room.userList.Add(user);
-
-            roomList.Add(room);
-
-            listView_log.Items.Add(user.Username + " tạo phòng mới. Mã phòng: " + room.roomID);
-            textBox_room_count.Text = (userCount + 1).ToString();
+            Manager.WriteToLog(user.Username + " tạo phòng mới. Mã phòng: " + newRoom.roomID);
+            Manager.UpdateRoomCount(roomList.Count);
+            Manager.UpdateUserCount(userList.Count);
 
             Packet message = new Packet
             {
@@ -143,7 +150,8 @@ namespace Server
                     room.userList.Add(user);
                 }
             }
-            listView_log.Items.Add(request.RoomID + ": " + user.Username + " tham gia");
+            Manager.WriteToLog(request.RoomID + ": " + user.Username + " tham gia");
+            Manager.UpdateUserCount(userList.Count);
         }
 
         private void send_graphics_handler(User user, Packet request)
@@ -179,26 +187,6 @@ namespace Server
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        // Lấy ra IPv4 của card mạng đang dùng
-        public string GetLocalIPv4(NetworkInterfaceType type)
-        {
-            string localIPv4 = string.Empty;
-            foreach (NetworkInterface item in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                if (item.NetworkInterfaceType == type && item.OperationalStatus == OperationalStatus.Up)
-                {
-                    foreach (UnicastIPAddressInformation ip in item.GetIPProperties().UnicastAddresses)
-                    {
-                        if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            localIPv4 = ip.Address.ToString();
-                        }
-                    }
-                }
-            }
-            return localIPv4;
         }
 
         private void Server_FormClosed(object sender, FormClosedEventArgs e)

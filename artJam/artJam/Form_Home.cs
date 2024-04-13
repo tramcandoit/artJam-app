@@ -18,6 +18,7 @@ namespace artJam
 {
     public partial class Form_Home : Form
     {
+        private bool isOffline;
         public Form_Home()
         {
             InitializeComponent();
@@ -32,6 +33,25 @@ namespace artJam
             this.button_go_create_room.Visible = true;          
             this.richTextBox_nickname.Visible = true;
             this.label_nickname.Visible = true;
+            this.panel_left.Visible = true;
+            this.button_mode_offline.Visible = true;
+            this.button_mode_LAN.Visible = true;
+            this.isOffline = true;
+        }
+
+        private void button_mode_offline_Click(object sender, EventArgs e)
+        {
+            this.label_type_server_IP.Visible = false;
+            this.textBox_server_IP.Visible = false;
+            this.textBox_server_IP.Clear();
+            this.isOffline = true;
+        }
+
+        private void button_mode_LAN_Click(object sender, EventArgs e)
+        {
+            this.label_type_server_IP.Visible = true;
+            this.textBox_server_IP.Visible = true;
+            this.isOffline = false;
         }
 
         private void button_join_room_Click(object sender, EventArgs e)
@@ -66,12 +86,19 @@ namespace artJam
                 MessageBox.Show("Vui lòng nhập nickname");
                 return;
             }
+            if (!isOffline)
+            {
+                if (!IPv4IsValid(textBox_server_IP.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập IPv4 hợp lệ");
+                    return;
+                }
+            }
 
             this.Hide();
 
             string username = richTextBox_nickname.Text;
-            //
-            string serverIP = textBox_server_IP.Text;
+            string serverIP = isOffline ? "127.0.0.1" : textBox_server_IP.Text;
             go_to_canvas(serverIP, 0, username);
         }
 
@@ -82,21 +109,38 @@ namespace artJam
                 MessageBox.Show("Vui lòng nhập nickname và mã phòng");
                 return;
             }
+            if (!isOffline)
+            {
+                if (!IPv4IsValid(textBox_server_IP.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập IPv4 hợp lệ");
+                    return;
+                }
+            }
 
             this.Hide();
 
             string username = richTextBox_nickname.Text;
             string roomID = richTextBox_code_room.Text;
-            //
-            string serverIP = textBox_server_IP.Text;
-
+            string serverIP = isOffline ? "127.0.0.1" : textBox_server_IP.Text;
             go_to_canvas(serverIP, 1, username, roomID);
         }
 
-        void go_to_canvas(string serverIP, int code, string username,  string roomID = "")
+        private void go_to_canvas(string serverIP, int code, string username,  string roomID = "")
         {
             Form_Client canvas = new Form_Client(serverIP, code, username, roomID);
             canvas.Show();
+        }
+
+        public bool IPv4IsValid(string ipv4)
+        {
+            if (String.IsNullOrWhiteSpace(ipv4)) return false;
+
+            string[] splitValues = ipv4.Split('.');
+            if (splitValues.Length != 4) return false;
+            
+            byte posNum;
+            return splitValues.All(i => byte.TryParse(i, out posNum));
         }
     }
 }

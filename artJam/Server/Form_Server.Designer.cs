@@ -34,12 +34,15 @@
             this.button_stop_server = new System.Windows.Forms.Button();
             this.textBox_server_local_IP = new System.Windows.Forms.TextBox();
             this.listView_log = new System.Windows.Forms.ListView();
+            this.button_get_server_IP = new System.Windows.Forms.Button();
+            this.label_user_count = new System.Windows.Forms.Label();
+            this.textBox_user_count = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label_room_count
             // 
             this.label_room_count.AutoSize = true;
-            this.label_room_count.Location = new System.Drawing.Point(526, 19);
+            this.label_room_count.Location = new System.Drawing.Point(585, 86);
             this.label_room_count.Name = "label_room_count";
             this.label_room_count.Size = new System.Drawing.Size(111, 16);
             this.label_room_count.TabIndex = 0;
@@ -47,17 +50,18 @@
             // 
             // textBox_room_count
             // 
-            this.textBox_room_count.Location = new System.Drawing.Point(663, 16);
+            this.textBox_room_count.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_room_count.Location = new System.Drawing.Point(717, 83);
             this.textBox_room_count.Name = "textBox_room_count";
             this.textBox_room_count.ReadOnly = true;
-            this.textBox_room_count.Size = new System.Drawing.Size(100, 22);
+            this.textBox_room_count.Size = new System.Drawing.Size(71, 22);
             this.textBox_room_count.TabIndex = 1;
             // 
             // button_start_server
             // 
-            this.button_start_server.Location = new System.Drawing.Point(32, 12);
+            this.button_start_server.Location = new System.Drawing.Point(32, 72);
             this.button_start_server.Name = "button_start_server";
-            this.button_start_server.Size = new System.Drawing.Size(75, 23);
+            this.button_start_server.Size = new System.Drawing.Size(166, 45);
             this.button_start_server.TabIndex = 2;
             this.button_start_server.Text = "Start";
             this.button_start_server.UseVisualStyleBackColor = true;
@@ -65,9 +69,9 @@
             // 
             // button_stop_server
             // 
-            this.button_stop_server.Location = new System.Drawing.Point(154, 12);
+            this.button_stop_server.Location = new System.Drawing.Point(32, 133);
             this.button_stop_server.Name = "button_stop_server";
-            this.button_stop_server.Size = new System.Drawing.Size(75, 23);
+            this.button_stop_server.Size = new System.Drawing.Size(166, 45);
             this.button_stop_server.TabIndex = 3;
             this.button_stop_server.Text = "Stop";
             this.button_stop_server.UseVisualStyleBackColor = true;
@@ -75,26 +79,59 @@
             // 
             // textBox_server_local_IP
             // 
-            this.textBox_server_local_IP.Location = new System.Drawing.Point(491, 160);
+            this.textBox_server_local_IP.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_server_local_IP.Location = new System.Drawing.Point(32, 346);
             this.textBox_server_local_IP.Name = "textBox_server_local_IP";
-            this.textBox_server_local_IP.Size = new System.Drawing.Size(152, 22);
+            this.textBox_server_local_IP.ReadOnly = true;
+            this.textBox_server_local_IP.Size = new System.Drawing.Size(166, 22);
             this.textBox_server_local_IP.TabIndex = 4;
             // 
             // listView_log
             // 
             this.listView_log.HideSelection = false;
-            this.listView_log.Location = new System.Drawing.Point(36, 59);
+            this.listView_log.Location = new System.Drawing.Point(243, 12);
             this.listView_log.Name = "listView_log";
-            this.listView_log.Size = new System.Drawing.Size(727, 363);
+            this.listView_log.Size = new System.Drawing.Size(316, 426);
             this.listView_log.TabIndex = 4;
             this.listView_log.UseCompatibleStateImageBehavior = false;
             this.listView_log.View = System.Windows.Forms.View.List;
+            // 
+            // button_get_server_IP
+            // 
+            this.button_get_server_IP.Location = new System.Drawing.Point(32, 282);
+            this.button_get_server_IP.Name = "button_get_server_IP";
+            this.button_get_server_IP.Size = new System.Drawing.Size(166, 45);
+            this.button_get_server_IP.TabIndex = 5;
+            this.button_get_server_IP.Text = "Lấy IP server";
+            this.button_get_server_IP.UseVisualStyleBackColor = true;
+            this.button_get_server_IP.Click += new System.EventHandler(this.button_get_server_IP_Click);
+            // 
+            // label_user_count
+            // 
+            this.label_user_count.AutoSize = true;
+            this.label_user_count.Location = new System.Drawing.Point(565, 133);
+            this.label_user_count.Name = "label_user_count";
+            this.label_user_count.Size = new System.Drawing.Size(139, 16);
+            this.label_user_count.TabIndex = 6;
+            this.label_user_count.Text = "Số người dùng hiện có";
+            // 
+            // textBox_user_count
+            // 
+            this.textBox_user_count.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_user_count.Location = new System.Drawing.Point(717, 130);
+            this.textBox_user_count.Name = "textBox_user_count";
+            this.textBox_user_count.ReadOnly = true;
+            this.textBox_user_count.Size = new System.Drawing.Size(71, 22);
+            this.textBox_user_count.TabIndex = 7;
             // 
             // Server
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.textBox_user_count);
+            this.Controls.Add(this.label_user_count);
+            this.Controls.Add(this.button_get_server_IP);
             this.Controls.Add(this.textBox_server_local_IP);
             this.Controls.Add(this.listView_log);
             this.Controls.Add(this.button_stop_server);
@@ -117,6 +154,9 @@
         private System.Windows.Forms.Button button_stop_server;
         private System.Windows.Forms.TextBox textBox_server_local_IP;
         private System.Windows.Forms.ListView listView_log;
+        private System.Windows.Forms.Button button_get_server_IP;
+        private System.Windows.Forms.Label label_user_count;
+        private System.Windows.Forms.TextBox textBox_user_count;
     }
 }
 
