@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.panel_canvas = new System.Windows.Forms.Panel();
-            this.textBox_room_code = new System.Windows.Forms.TextBox();
+            this.listView_room_users = new System.Windows.Forms.ListView();
             this.panel_color = new System.Windows.Forms.Panel();
+            this.textBox_room_code = new System.Windows.Forms.TextBox();
             this.pictureBox_lime = new System.Windows.Forms.PictureBox();
             this.pictureBox_black = new System.Windows.Forms.PictureBox();
             this.pictureBox_cyan = new System.Windows.Forms.PictureBox();
@@ -39,9 +40,6 @@
             this.pictureBox_blue = new System.Windows.Forms.PictureBox();
             this.pictureBox_orange = new System.Windows.Forms.PictureBox();
             this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
-            this.textBox_username = new System.Windows.Forms.TextBox();
-            this.listView1 = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel_canvas.SuspendLayout();
             this.panel_color.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
@@ -57,6 +55,7 @@
             // panel_canvas
             // 
             this.panel_canvas.BackColor = System.Drawing.Color.White;
+            this.panel_canvas.Controls.Add(this.listView_room_users);
             this.panel_canvas.Controls.Add(this.panel_color);
             this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_canvas.Location = new System.Drawing.Point(0, 0);
@@ -67,21 +66,19 @@
             this.panel_canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseMove);
             this.panel_canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseUp);
             // 
-            // textBox_room_code
+            // listView_room_users
             // 
-            this.textBox_room_code.Enabled = false;
-            this.textBox_room_code.Location = new System.Drawing.Point(373, 44);
-            this.textBox_room_code.Name = "textBox_room_code";
-            this.textBox_room_code.ReadOnly = true;
-            this.textBox_room_code.Size = new System.Drawing.Size(127, 22);
-            this.textBox_room_code.TabIndex = 1;
+            this.listView_room_users.HideSelection = false;
+            this.listView_room_users.Location = new System.Drawing.Point(685, 82);
+            this.listView_room_users.Name = "listView_room_users";
+            this.listView_room_users.Size = new System.Drawing.Size(185, 146);
+            this.listView_room_users.TabIndex = 1;
+            this.listView_room_users.UseCompatibleStateImageBehavior = false;
+            this.listView_room_users.View = System.Windows.Forms.View.List;
             // 
             // panel_color
             // 
             this.panel_color.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.panel_color.Controls.Add(this.label1);
-            this.panel_color.Controls.Add(this.listView1);
-            this.panel_color.Controls.Add(this.textBox_username);
             this.panel_color.Controls.Add(this.textBox_room_code);
             this.panel_color.Controls.Add(this.pictureBox_lime);
             this.panel_color.Controls.Add(this.pictureBox_black);
@@ -95,6 +92,15 @@
             this.panel_color.Name = "panel_color";
             this.panel_color.Size = new System.Drawing.Size(876, 73);
             this.panel_color.TabIndex = 0;
+            // 
+            // textBox_room_code
+            // 
+            this.textBox_room_code.Enabled = false;
+            this.textBox_room_code.Location = new System.Drawing.Point(682, 46);
+            this.textBox_room_code.Name = "textBox_room_code";
+            this.textBox_room_code.ReadOnly = true;
+            this.textBox_room_code.Size = new System.Drawing.Size(185, 22);
+            this.textBox_room_code.TabIndex = 1;
             // 
             // pictureBox_lime
             // 
@@ -176,34 +182,6 @@
             this.pictureBox_fuchsia.TabStop = false;
             this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
-            // textBox_username
-            // 
-            this.textBox_username.Enabled = false;
-            this.textBox_username.Location = new System.Drawing.Point(373, 9);
-            this.textBox_username.Name = "textBox_username";
-            this.textBox_username.ReadOnly = true;
-            this.textBox_username.Size = new System.Drawing.Size(127, 22);
-            this.textBox_username.TabIndex = 8;
-            // 
-            // listView1
-            // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(650, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(217, 65);
-            this.listView1.TabIndex = 1;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.List;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(599, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(45, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Online";
-            // 
             // Form_Client
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -243,8 +221,6 @@
         private System.Windows.Forms.PictureBox pictureBox_blue;
         private System.Windows.Forms.PictureBox pictureBox_orange;
         private System.Windows.Forms.TextBox textBox_room_code;
-        private System.Windows.Forms.TextBox textBox_username;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listView_room_users;
     }
 }

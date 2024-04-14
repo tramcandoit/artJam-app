@@ -33,6 +33,7 @@ namespace artJam
         private StreamWriter writer;
         private Packet this_client_info;
         private IPEndPoint serverIP;
+        Manager Manager;
 
         private SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
 
@@ -53,6 +54,8 @@ namespace artJam
             };
 
             serverIP = new IPEndPoint(IPAddress.Parse(_serverIP), 9999);
+
+            Manager = new Manager(listView_room_users, textBox_room_code);
         }
 
         private void Form_Client_Load(object sender, EventArgs e)
@@ -62,9 +65,10 @@ namespace artJam
                 client = new TcpClient();
                 client.Connect(serverIP);
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                Manager.ShowError("Không thể kết nối đến server!");
+                this.Close();
                 return;
             }
             NetworkStream stream = client.GetStream();
@@ -72,8 +76,8 @@ namespace artJam
             writer = new StreamWriter(stream);
 
             sendToServer(this_client_info);
-            textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
-            textBox_username.Text = "Nickname: " + this_client_info.Username;
+            Manager.UpdateRoomID(this_client_info.RoomID);
+            Manager.AddToUserListView(this_client_info.Username + " (bạn)");
 
             Thread listen = new Thread(Receive);
             listen.IsBackground = true;
@@ -105,9 +109,8 @@ namespace artJam
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
                 client.Close();
             }
         }
@@ -115,15 +118,33 @@ namespace artJam
         void generate_room_status(Packet response)
         {
             this_client_info.RoomID = response.RoomID;
-            textBox_room_code.Invoke(new Action(() =>
-            {
-                textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
-            }));
+            Manager.UpdateRoomID(this_client_info.RoomID);
         }
 
         void join_room_status(Packet response)
         {
+            if (response.Username.Contains('!'))
+            {
+                Manager.RemoveFromUserListView(response.Username.Substring(1));
+            }
 
+            else
+            {
+                List<string> list = response.Username.Split(',').ToList();
+                foreach (string username in list)
+                {
+                    if (username == this_client_info.Username)
+                    {
+                        list.Remove(username);
+                        break;
+                    }
+                }
+                Manager.ClearUserListView();
+                foreach (string username in list)
+                {
+                    Manager.AddToUserListView(username);
+                }
+            }
         }
 
         void draw_graphics_handler(Packet response)
@@ -211,9 +232,9 @@ namespace artJam
                 writer.WriteLine(messageInJson);
                 writer.Flush();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                Manager.ShowError("Gửi gói tin đến server thất bại!");
             }
         }
 

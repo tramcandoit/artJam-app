@@ -127,7 +127,7 @@ namespace Server
             newRoom.userList.Add(user);
             roomList.Add(newRoom);
 
-            Manager.WriteToLog(user.Username + " tạo phòng mới. Mã phòng: " + newRoom.roomID);
+            Manager.WriteToLog(user.Username + " đã tạo phòng mới. Mã phòng: " + newRoom.roomID);
             Manager.UpdateRoomCount(roomList.Count);
             Manager.UpdateUserCount(userList.Count);
 
@@ -144,15 +144,28 @@ namespace Server
         private void join_room_handler(User user, Packet request)
         {
             int id = int.Parse(request.RoomID.ToString());
+            Room requestingRoom = new Room();
             foreach (Room room in roomList)
             {
                 if (room.roomID == id)
                 {
-                    user.Username = request.Username;
-                    room.userList.Add(user);
+                    requestingRoom = room;
+                    break;
                 }
             }
-            Manager.WriteToLog(request.RoomID + ": " + user.Username + " tham gia");
+
+            // thêm user mới vào phòng
+            user.Username = request.Username;
+            requestingRoom.userList.Add(user);
+
+            // gửi danh sách user sau khi thêm user mới cho các user cũ trong phòng
+            request.Username = requestingRoom.GetUsernameListInString();
+            foreach (User _user in requestingRoom.userList)
+            {
+                sendSpecific(_user, request);
+            }
+
+            Manager.WriteToLog("Phòng " + request.RoomID + ": " + user.Username + " tham gia");
             Manager.UpdateUserCount(userList.Count);
         }
 
@@ -180,15 +193,31 @@ namespace Server
 
         private void close_client(User user)
         {
+            Room requestingRoom = new Room();
+
+            // xoá client khỏi cách list client và close client
             foreach (Room room in roomList)
             {
                 if (room.userList.Contains(user))
                 {
+                    requestingRoom = room;
                     room.userList.Remove(user);
+                    break;
                 }
             }
             userList.Remove(user);
             user.Client.Close();
+
+            // gửi thông báo về client vừa ngắt kết nối đến client khác trong phòng
+            Packet message = new Packet()
+            {
+                Code = 1,
+                Username = "!" + user.Username
+            };
+            foreach (User _user in requestingRoom.userList)
+            {
+                sendSpecific(_user, message);
+            }
 
             Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
             Manager.UpdateRoomCount(roomList.Count);
@@ -205,7 +234,7 @@ namespace Server
             }
             catch
             {
-                Manager.ShowError("Không gửi được nét vẽ đến user: " + user.Username);
+                Manager.ShowError("Không gửi được gói tin đến user: " + user.Username);
             }
         }
 
