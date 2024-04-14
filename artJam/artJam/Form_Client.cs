@@ -35,9 +35,11 @@ namespace artJam
         private IPEndPoint serverIP;
         Manager Manager;
 
+        private bool isOffline;
+
         private SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
 
-        public Form_Client(string _serverIP, int code, string username, string roomID)
+        public Form_Client(bool mode, string _serverIP, int code, string username, string roomID)
         {
             InitializeComponent();
 
@@ -53,35 +55,42 @@ namespace artJam
                 RoomID = roomID,
             };
 
-            serverIP = new IPEndPoint(IPAddress.Parse(_serverIP), 9999);
+            isOffline = mode;
+            if (!isOffline)
+            {
+                serverIP = new IPEndPoint(IPAddress.Parse(_serverIP), 9999);
+            }
 
             Manager = new Manager(listView_room_users, textBox_room_code);
         }
 
         private void Form_Client_Load(object sender, EventArgs e)
         {
-            try
+            if (!isOffline)
             {
-                client = new TcpClient();
-                client.Connect(serverIP);
-            }
-            catch
-            {
-                Manager.ShowError("Không thể kết nối đến server!");
-                this.Close();
-                return;
-            }
-            NetworkStream stream = client.GetStream();
-            reader = new StreamReader(stream);
-            writer = new StreamWriter(stream);
+                try
+                {
+                    client = new TcpClient();
+                    client.Connect(serverIP);
+                }
+                catch
+                {
+                    Manager.ShowError("Không thể kết nối đến server!");
+                    this.Close();
+                    return;
+                }
+                NetworkStream stream = client.GetStream();
+                reader = new StreamReader(stream);
+                writer = new StreamWriter(stream);
 
-            sendToServer(this_client_info);
-            Manager.UpdateRoomID(this_client_info.RoomID);
-            Manager.AddToUserListView(this_client_info.Username + " (bạn)");
+                sendToServer(this_client_info);
+                Manager.UpdateRoomID(this_client_info.RoomID);
+                Manager.AddToUserListView(this_client_info.Username + " (bạn)");
 
-            Thread listen = new Thread(Receive);
-            listen.IsBackground = true;
-            listen.Start();
+                Thread listen = new Thread(Receive);
+                listen.IsBackground = true;
+                listen.Start();
+            }
         }
 
         private void Receive()
@@ -150,6 +159,7 @@ namespace artJam
         void draw_graphics_handler(Packet response)
         {
             Pen p = new Pen(Color.FromName(response.PenColor), 7);
+            PenOptimizer();
 
             int length = response.Points_1.ToArray().Length;
 
@@ -211,17 +221,13 @@ namespace artJam
                 Points_1 = points_1,
                 Points_2 = points_2
             };
-            sendToServer(messsage);
+            if (!isOffline)
+            {
+                sendToServer(messsage);
+            }
 
             points_1.Clear();
             points_2.Clear();
-        }
-
-        private void PenOptimizer()
-        {
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            cursorPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            cursorPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
         }
 
         private void sendToServer(Packet message)
@@ -237,10 +243,19 @@ namespace artJam
                 Manager.ShowError("Gửi gói tin đến server thất bại!");
             }
         }
+        private void PenOptimizer()
+        {
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            cursorPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+            cursorPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+        }
 
         private void Form_Client_FormClosed(object sender, FormClosedEventArgs e)
         {
-            client.Close();
+            if (!isOffline)
+            {
+                client.Close();
+            }
             Application.OpenForms["Form_Home"].Close();
         }
     }

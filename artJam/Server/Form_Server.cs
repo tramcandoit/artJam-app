@@ -244,7 +244,10 @@ namespace Server
             {
                 user.Client.Close();
             }
-            listener.Stop();
+            if (listener != null)
+            {
+                listener.Stop();
+            }
         }
     }
 }

@@ -42,6 +42,7 @@
             this.label_type_server_IP = new System.Windows.Forms.Label();
             this.textBox_server_IP = new System.Windows.Forms.TextBox();
             this.panel_left = new System.Windows.Forms.Panel();
+            this.button_go_create_canvas = new System.Windows.Forms.Button();
             this.panel_left.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -191,11 +192,23 @@
             this.panel_left.TabIndex = 14;
             this.panel_left.Visible = false;
             // 
+            // button_go_create_canvas
+            // 
+            this.button_go_create_canvas.Location = new System.Drawing.Point(381, 180);
+            this.button_go_create_canvas.Name = "button_go_create_canvas";
+            this.button_go_create_canvas.Size = new System.Drawing.Size(114, 34);
+            this.button_go_create_canvas.TabIndex = 15;
+            this.button_go_create_canvas.Text = "Tạo bảng vẽ";
+            this.button_go_create_canvas.UseVisualStyleBackColor = true;
+            this.button_go_create_canvas.Visible = false;
+            this.button_go_create_canvas.Click += new System.EventHandler(this.button_go_create_canvas_Click);
+            // 
             // Form_Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_go_create_canvas);
             this.Controls.Add(this.panel_left);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.button_go_create_room);
@@ -230,6 +243,7 @@
         private System.Windows.Forms.Label label_type_server_IP;
         private System.Windows.Forms.TextBox textBox_server_IP;
         private System.Windows.Forms.Panel panel_left;
+        private System.Windows.Forms.Button button_go_create_canvas;
     }
 }
 
