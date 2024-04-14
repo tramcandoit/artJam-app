@@ -13,6 +13,7 @@ namespace artJam
         public string Username { get; set; }
         public string RoomID { get; set; }
         public string PenColor { get; set; }
+        public float PenWidth { get; set; }
         public List<Point> Points_1 { get; set; }
         public List<Point> Points_2 { get; set; }
     }

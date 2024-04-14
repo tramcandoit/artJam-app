@@ -14,7 +14,7 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.ComponentModel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace artJam
 {
@@ -45,8 +45,9 @@ namespace artJam
 
             // Tạo bảng vẽ và bút
             graphics = panel_canvas.CreateGraphics();
-            cursorPen = new Pen(Color.Black, 7);
-            PenOptimizer();
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            cursorPen = new Pen(Color.Black, 4);
+            PenOptimizer(cursorPen);
 
             this_client_info = new Packet()
             {
@@ -158,8 +159,8 @@ namespace artJam
 
         void draw_graphics_handler(Packet response)
         {
-            Pen p = new Pen(Color.FromName(response.PenColor), 7);
-            PenOptimizer();
+            Pen p = new Pen(Color.FromName(response.PenColor), response.PenWidth);
+            PenOptimizer(p);
 
             int length = response.Points_1.ToArray().Length;
 
@@ -176,7 +177,12 @@ namespace artJam
         {
             PictureBox color = (PictureBox)sender;
             cursorPen.Color = color.BackColor;
-            PenOptimizer();
+        }
+
+        private void button_pen_width_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            cursorPen.Width = Convert.ToInt32(button.Tag);
         }
 
         private void panel_canvas_MouseDown(object sender, MouseEventArgs e)
@@ -218,6 +224,7 @@ namespace artJam
                 Username = this_client_info.Username,
                 RoomID = this_client_info.RoomID,
                 PenColor = cursorPen.Color.Name,
+                PenWidth = cursorPen.Width,
                 Points_1 = points_1,
                 Points_2 = points_2
             };
@@ -243,11 +250,11 @@ namespace artJam
                 Manager.ShowError("Gửi gói tin đến server thất bại!");
             }
         }
-        private void PenOptimizer()
+
+        private void PenOptimizer(Pen pen)
         {
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            cursorPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            cursorPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+            pen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+            pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
         }
 
         private void Form_Client_FormClosed(object sender, FormClosedEventArgs e)
