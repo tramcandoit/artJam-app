@@ -32,13 +32,13 @@ namespace artJam
         private StreamReader reader;
         private StreamWriter writer;
         private Packet this_client_info;
-
         private IPEndPoint serverIP;
+
+        private SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
 
         public Form_Client(string _serverIP, int code, string username, string roomID)
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
 
             // Tạo bảng vẽ và bút
             graphics = panel_canvas.CreateGraphics();
@@ -68,8 +68,8 @@ namespace artJam
                 return;
             }
             NetworkStream stream = client.GetStream();
-            reader = new StreamReader(stream, System.Text.Encoding.UTF8);
-            writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
+            reader = new StreamReader(stream);
+            writer = new StreamWriter(stream);
 
             sendToServer(this_client_info);
             textBox_room_code.Text = "Mã phòng: " + this_client_info.RoomID;
@@ -126,12 +126,6 @@ namespace artJam
 
         }
 
-        //SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
-        //context.Send(s =>
-        //    {
-                
-        //    }, null);
-
         void draw_graphics_handler(Packet response)
         {
             Pen p = new Pen(Color.FromName(response.PenColor), 7);
@@ -140,7 +134,10 @@ namespace artJam
 
             for (int i = 0; i < length; i++)
             {
-                graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                context.Send(s =>
+                {
+                    graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                }, null);
             }
         }
 

@@ -26,7 +26,6 @@ namespace Server
         public Server()
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
 
             Manager = new Manager(listView_log, textBox_room_count, textBox_user_count);
         }
@@ -35,18 +34,23 @@ namespace Server
         {
             listener = new TcpListener(IPAddress.Any, 9999);
             listener.Start();
-            this.button_start_server.Enabled = false ;
+
             Thread clientListener = new Thread(Listen);
             clientListener.IsBackground = true;
             clientListener.Start();
 
-            Manager.WriteToLog("Server bắt đầu lắng nghe trên cổng 9999...");
+            Manager.WriteToLog("Server bắt đầu lắng nghe...");
+
+            this.button_start_server.Enabled = false;
         }
 
         private void button_stop_server_Click(object sender, EventArgs e)
         {
-            // close client socket
-
+            Manager.WriteToLog("Đóng kết nối server...");
+            foreach (User user in userList)
+            {
+                user.Client.Close();
+            }
             listener.Stop();
         }
 
@@ -68,10 +72,10 @@ namespace Server
                     receiver.Start(client);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 listener = new TcpListener(IPAddress.Any, 9999);
-                MessageBox.Show(ex.Message);
+                listener.Start();
             }
         }
 
@@ -105,10 +109,9 @@ namespace Server
                 }
             }
 
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
-                client.Close();
+                close_client(user);
             }
         }
 
@@ -136,7 +139,6 @@ namespace Server
             };
             
             sendSpecific(user, message);
-            //client.Close();
         }
 
         private void join_room_handler(User user, Packet request)
@@ -163,6 +165,7 @@ namespace Server
                 if (room.roomID == id)
                 {
                     requestingRoom = room;
+                    break;
                 }
             }
 
@@ -175,6 +178,23 @@ namespace Server
             }
         }
 
+        private void close_client(User user)
+        {
+            foreach (Room room in roomList)
+            {
+                if (room.userList.Contains(user))
+                {
+                    room.userList.Remove(user);
+                }
+            }
+            userList.Remove(user);
+            user.Client.Close();
+
+            Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
+            Manager.UpdateRoomCount(roomList.Count);
+            Manager.UpdateUserCount(userList.Count);
+        }
+
         private void sendSpecific(User user, Object message)
         {
             string messageInJson = JsonConvert.SerializeObject(message);
@@ -183,14 +203,18 @@ namespace Server
                 user.Writer.WriteLine(messageInJson);
                 user.Writer.Flush();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                Manager.ShowError("Không gửi được nét vẽ đến user: " + user.Username);
             }
         }
 
         private void Server_FormClosed(object sender, FormClosedEventArgs e)
         {
+            foreach (User user in userList)
+            {
+                user.Client.Close();
+            }
             listener.Stop();
         }
     }

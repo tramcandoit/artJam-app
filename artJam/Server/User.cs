@@ -20,8 +20,8 @@ namespace Server
             this.Client = client;
             this.Username = string.Empty;
             NetworkStream stream = Client.GetStream();
-            this.Reader = new StreamReader(stream, System.Text.Encoding.UTF8);
-            this.Writer = new StreamWriter(stream, System.Text.Encoding.UTF8);
+            this.Reader = new StreamReader(stream);
+            this.Writer = new StreamWriter(stream);
         }
     }
 }
