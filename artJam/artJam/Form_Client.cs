@@ -161,14 +161,47 @@ namespace artJam
         {
             Pen p = new Pen(Color.FromName(response.PenColor), response.PenWidth);
             PenOptimizer(p);
+            int cursorX = 0, cursorY = 0;
+            float w = 0, h = 0;
 
-            int length = response.Points_1.ToArray().Length;
+            if (response.ShapeTag == 10)
+            {
+                int length = response.Points_1.ToArray().Length;
 
-            for (int i = 0; i < length; i++)
+                for (int i = 0; i < length; i++)
+                {
+                    context.Send(s =>
+                    {
+                        graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                    }, null);
+                }
+            }
+            else
+            {
+                cursorX = (int)response.Position[0];
+                cursorY = (int)response.Position[1];
+                w = response.Position[2];
+                h = response.Position[3];
+            }
+            if (response.ShapeTag == 11)
             {
                 context.Send(s =>
                 {
-                    graphics.DrawLine(p, response.Points_1[i], response.Points_2[i]);
+                    graphics.DrawLine(p, cursorX, cursorY, w + cursorX, h + cursorY);
+                }, null);
+            }
+            if (response.ShapeTag == 12)
+            {
+                context.Send(s =>
+                {
+                    graphics.DrawRectangle(p, cursorX, cursorY, w, h);
+                }, null);
+            }
+            if (response.ShapeTag == 13)
+            {
+                context.Send(s =>
+                {
+                    graphics.DrawEllipse(p, cursorX, cursorY, w, h);
                 }, null);
             }
         }
@@ -185,6 +218,14 @@ namespace artJam
             cursorPen.Width = Convert.ToInt32(button.Tag);
         }
 
+        private int shapeTag = 10;
+
+        private void button_shapes_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            shapeTag = Convert.ToInt32(button.Tag);
+        }
+
         private void panel_canvas_MouseDown(object sender, MouseEventArgs e)
         {
             cursorMoving = true;
@@ -198,7 +239,7 @@ namespace artJam
 
         private void panel_canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (cursorX != -1 && cursorY != -1 && cursorMoving == true)
+            if (cursorX != -1 && cursorY != -1 && cursorMoving == true && shapeTag == 10)
             {
                 p = e.Location;
 
@@ -214,9 +255,23 @@ namespace artJam
 
         private void panel_canvas_MouseUp(object sender, MouseEventArgs e)
         {
-            cursorMoving = false;
-            cursorX = -1;
-            cursorY = -1;
+            float w = e.Location.X - cursorX;
+            float h = e.Location.Y - cursorY;
+
+            if (shapeTag == 11)
+            {
+                graphics.DrawLine(cursorPen, cursorX, cursorY, w + cursorX, h + cursorY);
+            }
+            if (shapeTag == 12)
+            {
+                graphics.DrawRectangle(cursorPen, cursorX, cursorY, w, h);
+            }
+            if (shapeTag == 13)
+            {
+                graphics.DrawEllipse(cursorPen, cursorX, cursorY, w, h);
+            }
+
+            float[] pos = new float[] { cursorX, cursorY, w, h };
 
             Packet messsage = new Packet
             {
@@ -225,14 +280,19 @@ namespace artJam
                 RoomID = this_client_info.RoomID,
                 PenColor = cursorPen.Color.Name,
                 PenWidth = cursorPen.Width,
+                ShapeTag = shapeTag,
                 Points_1 = points_1,
-                Points_2 = points_2
+                Points_2 = points_2,
+                Position = pos
             };
             if (!isOffline)
             {
                 sendToServer(messsage);
             }
 
+            cursorMoving = false;
+            cursorX = -1;
+            cursorY = -1;
             points_1.Clear();
             points_2.Clear();
         }
@@ -265,5 +325,7 @@ namespace artJam
             }
             Application.OpenForms["Form_Home"].Close();
         }
+
+        
     }
 }

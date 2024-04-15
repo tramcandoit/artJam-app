@@ -32,38 +32,44 @@
             this.panel_canvas = new System.Windows.Forms.Panel();
             this.listView_room_users = new System.Windows.Forms.ListView();
             this.panel_top = new System.Windows.Forms.Panel();
+            this.label_pen_size = new System.Windows.Forms.Label();
+            this.label_colors = new System.Windows.Forms.Label();
             this.button_pen_width_3 = new System.Windows.Forms.Button();
             this.button_pen_width_2 = new System.Windows.Forms.Button();
             this.button_pen_width_1 = new System.Windows.Forms.Button();
-            this.textBox_room_code = new System.Windows.Forms.TextBox();
-            this.label_pen_size = new System.Windows.Forms.Label();
-            this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
-            this.pictureBox_orange = new System.Windows.Forms.PictureBox();
-            this.pictureBox_blue = new System.Windows.Forms.PictureBox();
-            this.pictureBox_yellow = new System.Windows.Forms.PictureBox();
-            this.pictureBox_red = new System.Windows.Forms.PictureBox();
-            this.pictureBox_cyan = new System.Windows.Forms.PictureBox();
-            this.pictureBox_black = new System.Windows.Forms.PictureBox();
             this.pictureBox_lime = new System.Windows.Forms.PictureBox();
-            this.label_colors = new System.Windows.Forms.Label();
+            this.pictureBox_black = new System.Windows.Forms.PictureBox();
+            this.pictureBox_cyan = new System.Windows.Forms.PictureBox();
+            this.pictureBox_red = new System.Windows.Forms.PictureBox();
+            this.pictureBox_yellow = new System.Windows.Forms.PictureBox();
+            this.pictureBox_blue = new System.Windows.Forms.PictureBox();
+            this.pictureBox_orange = new System.Windows.Forms.PictureBox();
+            this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
+            this.textBox_room_code = new System.Windows.Forms.TextBox();
+            this.button_shape_line = new System.Windows.Forms.Button();
+            this.button_shape_rectangle = new System.Windows.Forms.Button();
+            this.button_shape_circle = new System.Windows.Forms.Button();
+            this.label_shapes = new System.Windows.Forms.Label();
+            this.label_tools = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel_canvas.SuspendLayout();
             this.panel_top.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_yellow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_red)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_red)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_yellow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_canvas
             // 
             this.panel_canvas.BackColor = System.Drawing.Color.White;
             this.panel_canvas.Controls.Add(this.listView_room_users);
-            this.panel_canvas.Controls.Add(this.panel_top);
             this.panel_canvas.Controls.Add(this.textBox_room_code);
+            this.panel_canvas.Controls.Add(this.panel_top);
             this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_canvas.Location = new System.Drawing.Point(0, 0);
             this.panel_canvas.Name = "panel_canvas";
@@ -86,7 +92,13 @@
             // panel_top
             // 
             this.panel_top.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panel_top.Controls.Add(this.button1);
+            this.panel_top.Controls.Add(this.label_tools);
+            this.panel_top.Controls.Add(this.label_shapes);
+            this.panel_top.Controls.Add(this.button_shape_circle);
+            this.panel_top.Controls.Add(this.button_shape_line);
             this.panel_top.Controls.Add(this.label_pen_size);
+            this.panel_top.Controls.Add(this.button_shape_rectangle);
             this.panel_top.Controls.Add(this.label_colors);
             this.panel_top.Controls.Add(this.button_pen_width_3);
             this.panel_top.Controls.Add(this.button_pen_width_2);
@@ -104,6 +116,24 @@
             this.panel_top.Size = new System.Drawing.Size(882, 111);
             this.panel_top.TabIndex = 0;
             // 
+            // label_pen_size
+            // 
+            this.label_pen_size.AutoSize = true;
+            this.label_pen_size.Location = new System.Drawing.Point(266, 79);
+            this.label_pen_size.Name = "label_pen_size";
+            this.label_pen_size.Size = new System.Drawing.Size(39, 20);
+            this.label_pen_size.TabIndex = 12;
+            this.label_pen_size.Text = "Size";
+            // 
+            // label_colors
+            // 
+            this.label_colors.AutoSize = true;
+            this.label_colors.Location = new System.Drawing.Point(754, 82);
+            this.label_colors.Name = "label_colors";
+            this.label_colors.Size = new System.Drawing.Size(57, 20);
+            this.label_colors.TabIndex = 11;
+            this.label_colors.Text = "Colors";
+            // 
             // button_pen_width_3
             // 
             this.button_pen_width_3.BackColor = System.Drawing.Color.Transparent;
@@ -111,7 +141,7 @@
             this.button_pen_width_3.FlatAppearance.BorderSize = 0;
             this.button_pen_width_3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_pen_width_3.Image = ((System.Drawing.Image)(resources.GetObject("button_pen_width_3.Image")));
-            this.button_pen_width_3.Location = new System.Drawing.Point(210, 56);
+            this.button_pen_width_3.Location = new System.Drawing.Point(257, 52);
             this.button_pen_width_3.Name = "button_pen_width_3";
             this.button_pen_width_3.Size = new System.Drawing.Size(50, 15);
             this.button_pen_width_3.TabIndex = 10;
@@ -126,7 +156,7 @@
             this.button_pen_width_2.FlatAppearance.BorderSize = 0;
             this.button_pen_width_2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_pen_width_2.Image = ((System.Drawing.Image)(resources.GetObject("button_pen_width_2.Image")));
-            this.button_pen_width_2.Location = new System.Drawing.Point(210, 35);
+            this.button_pen_width_2.Location = new System.Drawing.Point(257, 31);
             this.button_pen_width_2.Name = "button_pen_width_2";
             this.button_pen_width_2.Size = new System.Drawing.Size(50, 15);
             this.button_pen_width_2.TabIndex = 9;
@@ -141,13 +171,101 @@
             this.button_pen_width_1.FlatAppearance.BorderSize = 0;
             this.button_pen_width_1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_pen_width_1.Image = ((System.Drawing.Image)(resources.GetObject("button_pen_width_1.Image")));
-            this.button_pen_width_1.Location = new System.Drawing.Point(210, 14);
+            this.button_pen_width_1.Location = new System.Drawing.Point(257, 10);
             this.button_pen_width_1.Name = "button_pen_width_1";
             this.button_pen_width_1.Size = new System.Drawing.Size(50, 15);
             this.button_pen_width_1.TabIndex = 8;
             this.button_pen_width_1.Tag = "2";
             this.button_pen_width_1.UseVisualStyleBackColor = false;
             this.button_pen_width_1.Click += new System.EventHandler(this.button_pen_width_Click);
+            // 
+            // pictureBox_lime
+            // 
+            this.pictureBox_lime.BackColor = System.Drawing.Color.Lime;
+            this.pictureBox_lime.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_lime.Location = new System.Drawing.Point(716, 46);
+            this.pictureBox_lime.Name = "pictureBox_lime";
+            this.pictureBox_lime.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_lime.TabIndex = 7;
+            this.pictureBox_lime.TabStop = false;
+            this.pictureBox_lime.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_black
+            // 
+            this.pictureBox_black.BackColor = System.Drawing.Color.Black;
+            this.pictureBox_black.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_black.Location = new System.Drawing.Point(716, 11);
+            this.pictureBox_black.Name = "pictureBox_black";
+            this.pictureBox_black.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_black.TabIndex = 6;
+            this.pictureBox_black.TabStop = false;
+            this.pictureBox_black.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_cyan
+            // 
+            this.pictureBox_cyan.BackColor = System.Drawing.Color.Cyan;
+            this.pictureBox_cyan.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_cyan.Location = new System.Drawing.Point(752, 46);
+            this.pictureBox_cyan.Name = "pictureBox_cyan";
+            this.pictureBox_cyan.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_cyan.TabIndex = 5;
+            this.pictureBox_cyan.TabStop = false;
+            this.pictureBox_cyan.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_red
+            // 
+            this.pictureBox_red.BackColor = System.Drawing.Color.Red;
+            this.pictureBox_red.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_red.Location = new System.Drawing.Point(752, 11);
+            this.pictureBox_red.Name = "pictureBox_red";
+            this.pictureBox_red.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_red.TabIndex = 4;
+            this.pictureBox_red.TabStop = false;
+            this.pictureBox_red.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_yellow
+            // 
+            this.pictureBox_yellow.BackColor = System.Drawing.Color.Yellow;
+            this.pictureBox_yellow.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_yellow.Location = new System.Drawing.Point(824, 11);
+            this.pictureBox_yellow.Name = "pictureBox_yellow";
+            this.pictureBox_yellow.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_yellow.TabIndex = 3;
+            this.pictureBox_yellow.TabStop = false;
+            this.pictureBox_yellow.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_blue
+            // 
+            this.pictureBox_blue.BackColor = System.Drawing.Color.Blue;
+            this.pictureBox_blue.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_blue.Location = new System.Drawing.Point(788, 46);
+            this.pictureBox_blue.Name = "pictureBox_blue";
+            this.pictureBox_blue.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_blue.TabIndex = 2;
+            this.pictureBox_blue.TabStop = false;
+            this.pictureBox_blue.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_orange
+            // 
+            this.pictureBox_orange.BackColor = System.Drawing.Color.Orange;
+            this.pictureBox_orange.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_orange.Location = new System.Drawing.Point(788, 11);
+            this.pictureBox_orange.Name = "pictureBox_orange";
+            this.pictureBox_orange.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_orange.TabIndex = 1;
+            this.pictureBox_orange.TabStop = false;
+            this.pictureBox_orange.Click += new System.EventHandler(this.pictureBox_black_Click);
+            // 
+            // pictureBox_fuchsia
+            // 
+            this.pictureBox_fuchsia.BackColor = System.Drawing.Color.Fuchsia;
+            this.pictureBox_fuchsia.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_fuchsia.Location = new System.Drawing.Point(824, 46);
+            this.pictureBox_fuchsia.Name = "pictureBox_fuchsia";
+            this.pictureBox_fuchsia.Size = new System.Drawing.Size(25, 25);
+            this.pictureBox_fuchsia.TabIndex = 0;
+            this.pictureBox_fuchsia.TabStop = false;
+            this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
             // textBox_room_code
             // 
@@ -159,111 +277,83 @@
             this.textBox_room_code.Size = new System.Drawing.Size(147, 30);
             this.textBox_room_code.TabIndex = 1;
             // 
-            // label_pen_size
+            // button_shape_line
             // 
-            this.label_pen_size.AutoSize = true;
-            this.label_pen_size.Location = new System.Drawing.Point(219, 83);
-            this.label_pen_size.Name = "label_pen_size";
-            this.label_pen_size.Size = new System.Drawing.Size(39, 20);
-            this.label_pen_size.TabIndex = 12;
-            this.label_pen_size.Text = "Size";
+            this.button_shape_line.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_line.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_line.FlatAppearance.BorderSize = 0;
+            this.button_shape_line.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_line.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_line.Image")));
+            this.button_shape_line.Location = new System.Drawing.Point(382, 12);
+            this.button_shape_line.Name = "button_shape_line";
+            this.button_shape_line.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_line.TabIndex = 13;
+            this.button_shape_line.Tag = "11";
+            this.button_shape_line.UseVisualStyleBackColor = false;
+            this.button_shape_line.Click += new System.EventHandler(this.button_shapes_Click);
             // 
-            // pictureBox_fuchsia
+            // button_shape_rectangle
             // 
-            this.pictureBox_fuchsia.BackColor = System.Drawing.Color.Fuchsia;
-            this.pictureBox_fuchsia.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_fuchsia.Location = new System.Drawing.Point(144, 47);
-            this.pictureBox_fuchsia.Name = "pictureBox_fuchsia";
-            this.pictureBox_fuchsia.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_fuchsia.TabIndex = 0;
-            this.pictureBox_fuchsia.TabStop = false;
-            this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
+            this.button_shape_rectangle.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_rectangle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_rectangle.FlatAppearance.BorderSize = 0;
+            this.button_shape_rectangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_rectangle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_rectangle.Image")));
+            this.button_shape_rectangle.Location = new System.Drawing.Point(453, 12);
+            this.button_shape_rectangle.Name = "button_shape_rectangle";
+            this.button_shape_rectangle.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_rectangle.TabIndex = 14;
+            this.button_shape_rectangle.Tag = "12";
+            this.button_shape_rectangle.UseVisualStyleBackColor = false;
+            this.button_shape_rectangle.Click += new System.EventHandler(this.button_shapes_Click);
             // 
-            // pictureBox_orange
+            // button_shape_circle
             // 
-            this.pictureBox_orange.BackColor = System.Drawing.Color.Orange;
-            this.pictureBox_orange.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_orange.Location = new System.Drawing.Point(108, 12);
-            this.pictureBox_orange.Name = "pictureBox_orange";
-            this.pictureBox_orange.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_orange.TabIndex = 1;
-            this.pictureBox_orange.TabStop = false;
-            this.pictureBox_orange.Click += new System.EventHandler(this.pictureBox_black_Click);
+            this.button_shape_circle.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_circle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_circle.FlatAppearance.BorderSize = 0;
+            this.button_shape_circle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_circle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_circle.Image")));
+            this.button_shape_circle.Location = new System.Drawing.Point(536, 12);
+            this.button_shape_circle.Name = "button_shape_circle";
+            this.button_shape_circle.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_circle.TabIndex = 15;
+            this.button_shape_circle.Tag = "13";
+            this.button_shape_circle.UseVisualStyleBackColor = false;
+            this.button_shape_circle.Click += new System.EventHandler(this.button_shapes_Click);
             // 
-            // pictureBox_blue
+            // label_shapes
             // 
-            this.pictureBox_blue.BackColor = System.Drawing.Color.Blue;
-            this.pictureBox_blue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_blue.Location = new System.Drawing.Point(108, 47);
-            this.pictureBox_blue.Name = "pictureBox_blue";
-            this.pictureBox_blue.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_blue.TabIndex = 2;
-            this.pictureBox_blue.TabStop = false;
-            this.pictureBox_blue.Click += new System.EventHandler(this.pictureBox_black_Click);
+            this.label_shapes.AutoSize = true;
+            this.label_shapes.Location = new System.Drawing.Point(449, 78);
+            this.label_shapes.Name = "label_shapes";
+            this.label_shapes.Size = new System.Drawing.Size(63, 20);
+            this.label_shapes.TabIndex = 16;
+            this.label_shapes.Text = "Shapes";
             // 
-            // pictureBox_yellow
+            // label_tools
             // 
-            this.pictureBox_yellow.BackColor = System.Drawing.Color.Yellow;
-            this.pictureBox_yellow.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_yellow.Location = new System.Drawing.Point(144, 12);
-            this.pictureBox_yellow.Name = "pictureBox_yellow";
-            this.pictureBox_yellow.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_yellow.TabIndex = 3;
-            this.pictureBox_yellow.TabStop = false;
-            this.pictureBox_yellow.Click += new System.EventHandler(this.pictureBox_black_Click);
+            this.label_tools.AutoSize = true;
+            this.label_tools.Location = new System.Drawing.Point(83, 82);
+            this.label_tools.Name = "label_tools";
+            this.label_tools.Size = new System.Drawing.Size(49, 20);
+            this.label_tools.TabIndex = 17;
+            this.label_tools.Text = "Tools";
             // 
-            // pictureBox_red
+            // button1
             // 
-            this.pictureBox_red.BackColor = System.Drawing.Color.Red;
-            this.pictureBox_red.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_red.Location = new System.Drawing.Point(72, 12);
-            this.pictureBox_red.Name = "pictureBox_red";
-            this.pictureBox_red.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_red.TabIndex = 4;
-            this.pictureBox_red.TabStop = false;
-            this.pictureBox_red.Click += new System.EventHandler(this.pictureBox_black_Click);
-            // 
-            // pictureBox_cyan
-            // 
-            this.pictureBox_cyan.BackColor = System.Drawing.Color.Cyan;
-            this.pictureBox_cyan.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_cyan.Location = new System.Drawing.Point(72, 47);
-            this.pictureBox_cyan.Name = "pictureBox_cyan";
-            this.pictureBox_cyan.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_cyan.TabIndex = 5;
-            this.pictureBox_cyan.TabStop = false;
-            this.pictureBox_cyan.Click += new System.EventHandler(this.pictureBox_black_Click);
-            // 
-            // pictureBox_black
-            // 
-            this.pictureBox_black.BackColor = System.Drawing.Color.Black;
-            this.pictureBox_black.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_black.Location = new System.Drawing.Point(36, 12);
-            this.pictureBox_black.Name = "pictureBox_black";
-            this.pictureBox_black.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_black.TabIndex = 6;
-            this.pictureBox_black.TabStop = false;
-            this.pictureBox_black.Click += new System.EventHandler(this.pictureBox_black_Click);
-            // 
-            // pictureBox_lime
-            // 
-            this.pictureBox_lime.BackColor = System.Drawing.Color.Lime;
-            this.pictureBox_lime.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_lime.Location = new System.Drawing.Point(36, 47);
-            this.pictureBox_lime.Name = "pictureBox_lime";
-            this.pictureBox_lime.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox_lime.TabIndex = 7;
-            this.pictureBox_lime.TabStop = false;
-            this.pictureBox_lime.Click += new System.EventHandler(this.pictureBox_black_Click);
-            // 
-            // label_colors
-            // 
-            this.label_colors.AutoSize = true;
-            this.label_colors.Location = new System.Drawing.Point(74, 83);
-            this.label_colors.Name = "label_colors";
-            this.label_colors.Size = new System.Drawing.Size(57, 20);
-            this.label_colors.TabIndex = 11;
-            this.label_colors.Text = "Colors";
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(31, 17);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.TabIndex = 18;
+            this.button1.Tag = "10";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button_shapes_Click);
             // 
             // Form_Client
             // 
@@ -284,14 +374,14 @@
             this.panel_canvas.PerformLayout();
             this.panel_top.ResumeLayout(false);
             this.panel_top.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_yellow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_red)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_red)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_yellow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -315,5 +405,11 @@
         private System.Windows.Forms.PictureBox pictureBox_blue;
         private System.Windows.Forms.PictureBox pictureBox_orange;
         private System.Windows.Forms.PictureBox pictureBox_fuchsia;
+        private System.Windows.Forms.Button button_shape_line;
+        private System.Windows.Forms.Button button_shape_circle;
+        private System.Windows.Forms.Button button_shape_rectangle;
+        private System.Windows.Forms.Label label_shapes;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label_tools;
     }
 }
