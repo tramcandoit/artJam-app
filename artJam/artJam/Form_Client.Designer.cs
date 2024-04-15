@@ -29,10 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Client));
-            this.panel_canvas = new System.Windows.Forms.Panel();
+            this.panel_main = new System.Windows.Forms.Panel();
             this.listView_room_users = new System.Windows.Forms.ListView();
+            this.textBox_room_code = new System.Windows.Forms.TextBox();
             this.panel_top = new System.Windows.Forms.Panel();
+            this.button_pen = new System.Windows.Forms.Button();
+            this.label_tools = new System.Windows.Forms.Label();
+            this.label_shapes = new System.Windows.Forms.Label();
+            this.button_shape_circle = new System.Windows.Forms.Button();
+            this.button_shape_line = new System.Windows.Forms.Button();
             this.label_pen_size = new System.Windows.Forms.Label();
+            this.button_shape_rectangle = new System.Windows.Forms.Button();
             this.label_colors = new System.Windows.Forms.Label();
             this.button_pen_width_3 = new System.Windows.Forms.Button();
             this.button_pen_width_2 = new System.Windows.Forms.Button();
@@ -45,14 +52,8 @@
             this.pictureBox_blue = new System.Windows.Forms.PictureBox();
             this.pictureBox_orange = new System.Windows.Forms.PictureBox();
             this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
-            this.textBox_room_code = new System.Windows.Forms.TextBox();
-            this.button_shape_line = new System.Windows.Forms.Button();
-            this.button_shape_rectangle = new System.Windows.Forms.Button();
-            this.button_shape_circle = new System.Windows.Forms.Button();
-            this.label_shapes = new System.Windows.Forms.Label();
-            this.label_tools = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.panel_canvas.SuspendLayout();
+            this.Canvas = new System.Windows.Forms.PictureBox();
+            this.panel_main.SuspendLayout();
             this.panel_top.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).BeginInit();
@@ -62,22 +63,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SuspendLayout();
             // 
-            // panel_canvas
+            // panel_main
             // 
-            this.panel_canvas.BackColor = System.Drawing.Color.White;
-            this.panel_canvas.Controls.Add(this.listView_room_users);
-            this.panel_canvas.Controls.Add(this.textBox_room_code);
-            this.panel_canvas.Controls.Add(this.panel_top);
-            this.panel_canvas.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_canvas.Location = new System.Drawing.Point(0, 0);
-            this.panel_canvas.Name = "panel_canvas";
-            this.panel_canvas.Size = new System.Drawing.Size(882, 553);
-            this.panel_canvas.TabIndex = 0;
-            this.panel_canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseDown);
-            this.panel_canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseMove);
-            this.panel_canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel_canvas_MouseUp);
+            this.panel_main.BackColor = System.Drawing.Color.White;
+            this.panel_main.Controls.Add(this.textBox_room_code);
+            this.panel_main.Controls.Add(this.listView_room_users);
+            this.panel_main.Controls.Add(this.Canvas);
+            this.panel_main.Controls.Add(this.panel_top);
+            this.panel_main.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel_main.Location = new System.Drawing.Point(0, 0);
+            this.panel_main.Margin = new System.Windows.Forms.Padding(0);
+            this.panel_main.Name = "panel_main";
+            this.panel_main.Size = new System.Drawing.Size(882, 553);
+            this.panel_main.TabIndex = 0;
             // 
             // listView_room_users
             // 
@@ -89,10 +90,20 @@
             this.listView_room_users.UseCompatibleStateImageBehavior = false;
             this.listView_room_users.View = System.Windows.Forms.View.List;
             // 
+            // textBox_room_code
+            // 
+            this.textBox_room_code.BackColor = System.Drawing.Color.Bisque;
+            this.textBox_room_code.Enabled = false;
+            this.textBox_room_code.Location = new System.Drawing.Point(723, 202);
+            this.textBox_room_code.Name = "textBox_room_code";
+            this.textBox_room_code.ReadOnly = true;
+            this.textBox_room_code.Size = new System.Drawing.Size(147, 30);
+            this.textBox_room_code.TabIndex = 1;
+            // 
             // panel_top
             // 
             this.panel_top.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel_top.Controls.Add(this.button1);
+            this.panel_top.Controls.Add(this.button_pen);
             this.panel_top.Controls.Add(this.label_tools);
             this.panel_top.Controls.Add(this.label_shapes);
             this.panel_top.Controls.Add(this.button_shape_circle);
@@ -111,10 +122,75 @@
             this.panel_top.Controls.Add(this.pictureBox_blue);
             this.panel_top.Controls.Add(this.pictureBox_orange);
             this.panel_top.Controls.Add(this.pictureBox_fuchsia);
+            this.panel_top.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_top.Location = new System.Drawing.Point(0, 0);
+            this.panel_top.Margin = new System.Windows.Forms.Padding(0);
             this.panel_top.Name = "panel_top";
             this.panel_top.Size = new System.Drawing.Size(882, 111);
             this.panel_top.TabIndex = 0;
+            // 
+            // button_pen
+            // 
+            this.button_pen.BackColor = System.Drawing.Color.Transparent;
+            this.button_pen.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_pen.FlatAppearance.BorderSize = 0;
+            this.button_pen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_pen.Image = ((System.Drawing.Image)(resources.GetObject("button_pen.Image")));
+            this.button_pen.Location = new System.Drawing.Point(31, 17);
+            this.button_pen.Name = "button_pen";
+            this.button_pen.Size = new System.Drawing.Size(50, 50);
+            this.button_pen.TabIndex = 18;
+            this.button_pen.Tag = "10";
+            this.button_pen.UseVisualStyleBackColor = false;
+            this.button_pen.Click += new System.EventHandler(this.button_shapes_Click);
+            // 
+            // label_tools
+            // 
+            this.label_tools.AutoSize = true;
+            this.label_tools.Location = new System.Drawing.Point(83, 82);
+            this.label_tools.Name = "label_tools";
+            this.label_tools.Size = new System.Drawing.Size(49, 20);
+            this.label_tools.TabIndex = 17;
+            this.label_tools.Text = "Tools";
+            // 
+            // label_shapes
+            // 
+            this.label_shapes.AutoSize = true;
+            this.label_shapes.Location = new System.Drawing.Point(449, 78);
+            this.label_shapes.Name = "label_shapes";
+            this.label_shapes.Size = new System.Drawing.Size(63, 20);
+            this.label_shapes.TabIndex = 16;
+            this.label_shapes.Text = "Shapes";
+            // 
+            // button_shape_circle
+            // 
+            this.button_shape_circle.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_circle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_circle.FlatAppearance.BorderSize = 0;
+            this.button_shape_circle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_circle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_circle.Image")));
+            this.button_shape_circle.Location = new System.Drawing.Point(536, 12);
+            this.button_shape_circle.Name = "button_shape_circle";
+            this.button_shape_circle.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_circle.TabIndex = 15;
+            this.button_shape_circle.Tag = "13";
+            this.button_shape_circle.UseVisualStyleBackColor = false;
+            this.button_shape_circle.Click += new System.EventHandler(this.button_shapes_Click);
+            // 
+            // button_shape_line
+            // 
+            this.button_shape_line.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_line.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_line.FlatAppearance.BorderSize = 0;
+            this.button_shape_line.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_line.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_line.Image")));
+            this.button_shape_line.Location = new System.Drawing.Point(382, 12);
+            this.button_shape_line.Name = "button_shape_line";
+            this.button_shape_line.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_line.TabIndex = 13;
+            this.button_shape_line.Tag = "11";
+            this.button_shape_line.UseVisualStyleBackColor = false;
+            this.button_shape_line.Click += new System.EventHandler(this.button_shapes_Click);
             // 
             // label_pen_size
             // 
@@ -124,6 +200,21 @@
             this.label_pen_size.Size = new System.Drawing.Size(39, 20);
             this.label_pen_size.TabIndex = 12;
             this.label_pen_size.Text = "Size";
+            // 
+            // button_shape_rectangle
+            // 
+            this.button_shape_rectangle.BackColor = System.Drawing.Color.Transparent;
+            this.button_shape_rectangle.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_shape_rectangle.FlatAppearance.BorderSize = 0;
+            this.button_shape_rectangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_shape_rectangle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_rectangle.Image")));
+            this.button_shape_rectangle.Location = new System.Drawing.Point(453, 12);
+            this.button_shape_rectangle.Name = "button_shape_rectangle";
+            this.button_shape_rectangle.Size = new System.Drawing.Size(50, 50);
+            this.button_shape_rectangle.TabIndex = 14;
+            this.button_shape_rectangle.Tag = "12";
+            this.button_shape_rectangle.UseVisualStyleBackColor = false;
+            this.button_shape_rectangle.Click += new System.EventHandler(this.button_shapes_Click);
             // 
             // label_colors
             // 
@@ -267,100 +358,25 @@
             this.pictureBox_fuchsia.TabStop = false;
             this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
-            // textBox_room_code
+            // Canvas
             // 
-            this.textBox_room_code.BackColor = System.Drawing.Color.Bisque;
-            this.textBox_room_code.Enabled = false;
-            this.textBox_room_code.Location = new System.Drawing.Point(723, 202);
-            this.textBox_room_code.Name = "textBox_room_code";
-            this.textBox_room_code.ReadOnly = true;
-            this.textBox_room_code.Size = new System.Drawing.Size(147, 30);
-            this.textBox_room_code.TabIndex = 1;
-            // 
-            // button_shape_line
-            // 
-            this.button_shape_line.BackColor = System.Drawing.Color.Transparent;
-            this.button_shape_line.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_shape_line.FlatAppearance.BorderSize = 0;
-            this.button_shape_line.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_shape_line.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_line.Image")));
-            this.button_shape_line.Location = new System.Drawing.Point(382, 12);
-            this.button_shape_line.Name = "button_shape_line";
-            this.button_shape_line.Size = new System.Drawing.Size(50, 50);
-            this.button_shape_line.TabIndex = 13;
-            this.button_shape_line.Tag = "11";
-            this.button_shape_line.UseVisualStyleBackColor = false;
-            this.button_shape_line.Click += new System.EventHandler(this.button_shapes_Click);
-            // 
-            // button_shape_rectangle
-            // 
-            this.button_shape_rectangle.BackColor = System.Drawing.Color.Transparent;
-            this.button_shape_rectangle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_shape_rectangle.FlatAppearance.BorderSize = 0;
-            this.button_shape_rectangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_shape_rectangle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_rectangle.Image")));
-            this.button_shape_rectangle.Location = new System.Drawing.Point(453, 12);
-            this.button_shape_rectangle.Name = "button_shape_rectangle";
-            this.button_shape_rectangle.Size = new System.Drawing.Size(50, 50);
-            this.button_shape_rectangle.TabIndex = 14;
-            this.button_shape_rectangle.Tag = "12";
-            this.button_shape_rectangle.UseVisualStyleBackColor = false;
-            this.button_shape_rectangle.Click += new System.EventHandler(this.button_shapes_Click);
-            // 
-            // button_shape_circle
-            // 
-            this.button_shape_circle.BackColor = System.Drawing.Color.Transparent;
-            this.button_shape_circle.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_shape_circle.FlatAppearance.BorderSize = 0;
-            this.button_shape_circle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_shape_circle.Image = ((System.Drawing.Image)(resources.GetObject("button_shape_circle.Image")));
-            this.button_shape_circle.Location = new System.Drawing.Point(536, 12);
-            this.button_shape_circle.Name = "button_shape_circle";
-            this.button_shape_circle.Size = new System.Drawing.Size(50, 50);
-            this.button_shape_circle.TabIndex = 15;
-            this.button_shape_circle.Tag = "13";
-            this.button_shape_circle.UseVisualStyleBackColor = false;
-            this.button_shape_circle.Click += new System.EventHandler(this.button_shapes_Click);
-            // 
-            // label_shapes
-            // 
-            this.label_shapes.AutoSize = true;
-            this.label_shapes.Location = new System.Drawing.Point(449, 78);
-            this.label_shapes.Name = "label_shapes";
-            this.label_shapes.Size = new System.Drawing.Size(63, 20);
-            this.label_shapes.TabIndex = 16;
-            this.label_shapes.Text = "Shapes";
-            // 
-            // label_tools
-            // 
-            this.label_tools.AutoSize = true;
-            this.label_tools.Location = new System.Drawing.Point(83, 82);
-            this.label_tools.Name = "label_tools";
-            this.label_tools.Size = new System.Drawing.Size(49, 20);
-            this.label_tools.TabIndex = 17;
-            this.label_tools.Text = "Tools";
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.Transparent;
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(31, 17);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(50, 50);
-            this.button1.TabIndex = 18;
-            this.button1.Tag = "10";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button_shapes_Click);
+            this.Canvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Canvas.Location = new System.Drawing.Point(0, 111);
+            this.Canvas.Margin = new System.Windows.Forms.Padding(5);
+            this.Canvas.Name = "Canvas";
+            this.Canvas.Size = new System.Drawing.Size(882, 442);
+            this.Canvas.TabIndex = 2;
+            this.Canvas.TabStop = false;
+            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
+            this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
+            this.Canvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
             // 
             // Form_Client
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(882, 553);
-            this.Controls.Add(this.panel_canvas);
+            this.Controls.Add(this.panel_main);
             this.Font = new System.Drawing.Font("Gadugi", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.DimGray;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -370,8 +386,8 @@
             this.Text = "Client";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form_Client_FormClosed);
             this.Load += new System.EventHandler(this.Form_Client_Load);
-            this.panel_canvas.ResumeLayout(false);
-            this.panel_canvas.PerformLayout();
+            this.panel_main.ResumeLayout(false);
+            this.panel_main.PerformLayout();
             this.panel_top.ResumeLayout(false);
             this.panel_top.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).EndInit();
@@ -382,13 +398,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel_canvas;
+        private System.Windows.Forms.Panel panel_main;
         private System.Windows.Forms.Panel panel_top;
         private System.Windows.Forms.TextBox textBox_room_code;
         private System.Windows.Forms.ListView listView_room_users;
@@ -409,7 +426,8 @@
         private System.Windows.Forms.Button button_shape_circle;
         private System.Windows.Forms.Button button_shape_rectangle;
         private System.Windows.Forms.Label label_shapes;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_pen;
         private System.Windows.Forms.Label label_tools;
+        private System.Windows.Forms.PictureBox Canvas;
     }
 }

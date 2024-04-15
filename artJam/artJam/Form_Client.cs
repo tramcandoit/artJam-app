@@ -21,7 +21,8 @@ namespace artJam
     public partial class Form_Client : Form
     {
         // Khởi tạo các giá trị cho bảng vẽ
-        private static Graphics graphics;
+        private Bitmap bitmap;
+        private Graphics graphics;
         private Boolean cursorMoving = false;
         private Pen cursorPen;
         private int cursorX = -1;
@@ -33,7 +34,7 @@ namespace artJam
         private StreamWriter writer;
         private Packet this_client_info;
         private IPEndPoint serverIP;
-        Manager Manager;
+        private Manager Manager;
 
         private bool isOffline;
 
@@ -44,9 +45,12 @@ namespace artJam
             InitializeComponent();
 
             // Tạo bảng vẽ và bút
-            graphics = panel_canvas.CreateGraphics();
+            bitmap = new Bitmap(Canvas.Width, Canvas.Height);
+            graphics = Graphics.FromImage(bitmap);
+            graphics.Clear(Color.White);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            cursorPen = new Pen(Color.Black, 4);
+            Canvas.Image = bitmap;
+            cursorPen = new Pen(Color.Black, 2);
             PenOptimizer(cursorPen);
 
             this_client_info = new Packet()
@@ -204,6 +208,10 @@ namespace artJam
                     graphics.DrawEllipse(p, cursorX, cursorY, w, h);
                 }, null);
             }
+            context.Send(s =>
+            {
+                Canvas.Refresh();
+            }, null);
         }
 
         private void pictureBox_black_Click(object sender, EventArgs e)
@@ -225,8 +233,7 @@ namespace artJam
             Button button = (Button)sender;
             shapeTag = Convert.ToInt32(button.Tag);
         }
-
-        private void panel_canvas_MouseDown(object sender, MouseEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             cursorMoving = true;
             cursorX = e.X;
@@ -237,7 +244,7 @@ namespace artJam
         static List<Point> points_1 = new List<Point>();
         static List<Point> points_2 = new List<Point>();
 
-        private void panel_canvas_MouseMove(object sender, MouseEventArgs e)
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (cursorX != -1 && cursorY != -1 && cursorMoving == true && shapeTag == 10)
             {
@@ -251,9 +258,10 @@ namespace artJam
                 cursorX = e.X;
                 cursorY = e.Y;
             }
+            Canvas.Refresh();
         }
 
-        private void panel_canvas_MouseUp(object sender, MouseEventArgs e)
+        private void Canvas_MouseUp(object sender, MouseEventArgs e)
         {
             float w = e.Location.X - cursorX;
             float h = e.Location.Y - cursorY;
@@ -270,6 +278,7 @@ namespace artJam
             {
                 graphics.DrawEllipse(cursorPen, cursorX, cursorY, w, h);
             }
+            Canvas.Refresh();
 
             float[] pos = new float[] { cursorX, cursorY, w, h };
 
@@ -296,7 +305,6 @@ namespace artJam
             points_1.Clear();
             points_2.Clear();
         }
-
         private void sendToServer(Packet message)
         {
             string messageInJson = JsonConvert.SerializeObject(message);
@@ -325,7 +333,5 @@ namespace artJam
             }
             Application.OpenForms["Form_Home"].Close();
         }
-
-        
     }
 }
