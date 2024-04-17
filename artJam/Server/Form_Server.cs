@@ -144,14 +144,24 @@ namespace Server
         private void join_room_handler(User user, Packet request)
         {
             int id = int.Parse(request.RoomID.ToString());
+            //
+            bool roomExist = false;
+            //
             Room requestingRoom = new Room();
             foreach (Room room in roomList)
             {
                 if (room.roomID == id)
                 {
                     requestingRoom = room;
+                    roomExist = true;
                     break;
                 }
+            }
+            if (!roomExist)
+            {
+                request.Username = "err:thisroomdoesnotexist";
+                sendSpecific(user, request);
+                return;
             }
 
             // thêm user mới vào phòng
@@ -193,7 +203,6 @@ namespace Server
 
         private void close_client(User user)
         {
-            Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
             Room requestingRoom = new Room();
 
             // xoá client khỏi cách list client và close client
@@ -208,6 +217,11 @@ namespace Server
             }
             userList.Remove(user);
             user.Client.Close();
+
+            if (user.Username != string.Empty)
+            {
+                Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
+            }
 
             // gửi thông báo về client vừa ngắt kết nối đến client khác trong phòng
             Packet message = new Packet()

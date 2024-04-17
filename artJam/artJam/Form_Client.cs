@@ -142,6 +142,13 @@ namespace artJam
 
         void join_room_status(Packet response)
         {
+            if (response.Username == "err:thisroomdoesnotexist")
+            {
+                Manager.ShowError("Phòng bạn yêu cầu không tồn tại!");
+                client.Close();
+                this.Close();
+                return;
+            }
             if (response.Username.Contains('!'))
             {
                 Manager.RemoveFromUserListView(response.Username.Substring(1));
