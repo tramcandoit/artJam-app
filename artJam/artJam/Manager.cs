@@ -90,6 +90,26 @@ namespace artJam
                 RoomID.Text = "Phòng: " + roomID;
             }
         }
+        public string BitmapToString(Bitmap bitmap)
+        {
+            System.IO.MemoryStream stream = new System.IO.MemoryStream();
+            bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+            byte[] imageBytes = stream.ToArray();
+            string base64String = Convert.ToBase64String(imageBytes);
+
+            return base64String;
+        }
+
+        public Bitmap StringToBitmap(string base64string)
+        {
+            byte[] imageBytes = Convert.FromBase64String(base64string);
+            System.IO.MemoryStream stream = new System.IO.MemoryStream(imageBytes, 0, imageBytes.Length);
+            stream.Write(imageBytes, 0, imageBytes.Length);
+            Image image = Image.FromStream(stream, true);
+            Bitmap bitmap = new Bitmap(image);
+
+            return bitmap;
+        }
 
         public void ShowError(string message)
         {

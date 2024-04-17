@@ -22,7 +22,7 @@ namespace Server
         private List<Room> roomList = new List<Room>(); 
         private List<User> userList = new List<User>();
         private TcpListener listener;
-        Manager Manager;
+        private Manager Manager;
         public Server()
         {
             InitializeComponent();
@@ -104,6 +104,12 @@ namespace Server
                             break;
                         case 2:
                             send_graphics_handler(user, request);
+                            break;
+                        case 3:
+                            sync_bitmap_handler(user, request);
+                            break;
+                        case 4:
+                            send_bitmap_handler(user, request);
                             break;
                     }
                 }
@@ -199,6 +205,40 @@ namespace Server
                     sendSpecific(_user, request);
                 }
             }
+        }
+
+        private void sync_bitmap_handler(User user, Packet request)
+        {
+            int id = int.Parse(request.RoomID.ToString());
+            Room requestingRoom = new Room();
+            foreach (Room room in roomList)
+            {
+                if (room.roomID == id)
+                {
+                    requestingRoom = room;
+                    break;
+                }
+            }
+
+            User _user = requestingRoom.userList[0];
+            sendSpecific(_user, request);
+        }
+
+        private void send_bitmap_handler(User user, Packet request)
+        {
+            int id = int.Parse(request.RoomID.ToString());
+            Room requestingRoom = new Room();
+            foreach (Room room in roomList)
+            {
+                if (room.roomID == id)
+                {
+                    requestingRoom = room;
+                    break;
+                }
+            }
+
+            User _user = requestingRoom.userList[requestingRoom.userList.Count - 1];
+            sendSpecific(_user, request);
         }
 
         private void close_client(User user)
