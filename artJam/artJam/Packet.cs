@@ -18,5 +18,6 @@ namespace artJam
         public List<Point> Points_1 { get; set; }
         public List<Point> Points_2 { get; set; }
         public float[] Position { get; set; }
+        public string BitmapString { get; set; }
     }
 }

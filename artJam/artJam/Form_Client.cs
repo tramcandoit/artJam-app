@@ -39,6 +39,7 @@ namespace artJam
         private Manager Manager;
 
         private bool isOffline;
+        private bool isNew;
 
         private SynchronizationContext context = SynchronizationContext.Current ?? new SynchronizationContext();
 
@@ -64,6 +65,7 @@ namespace artJam
                 RoomID = roomID,
             };
 
+            isNew = true;
             isOffline = mode;
             if (!isOffline)
             {
@@ -125,6 +127,12 @@ namespace artJam
                         case 2:
                             draw_graphics_handler(response);
                             break;
+                        case 3:
+                            sync_bitmap_status(response);
+                            break;
+                        case 4:
+                            draw_bitmap_handler(response);
+                            break;
                     }
                 }
             }
@@ -142,6 +150,15 @@ namespace artJam
 
         void join_room_status(Packet response)
         {
+            if (isNew)
+            {
+                sendToServer(new Packet
+                {
+                    Code = 3,
+                    RoomID = response.RoomID,
+                });
+                isNew = false;
+            }
             if (response.Username == "err:thisroomdoesnotexist")
             {
                 Manager.ShowError("Phòng bạn yêu cầu không tồn tại!");
@@ -224,6 +241,36 @@ namespace artJam
             {
                 Canvas.Refresh();
             }, null);
+        }
+
+        private void draw_bitmap_handler(Packet response)
+        {
+            try
+            {
+                Bitmap _bitmap = Manager.StringToBitmap(response.BitmapString);
+                bitmap = _bitmap;
+                graphics = Graphics.FromImage(bitmap);
+                Canvas.Image = bitmap;
+                context.Send(s =>
+                {
+                    Canvas.Refresh();
+                }, null);
+            }
+            catch
+            {
+                Manager.ShowError("Vui lòng đợi một chút");
+            }
+        }
+
+        private void sync_bitmap_status(Packet respone)
+        {
+            Packet message = new Packet
+            {
+                Code = 4,
+                RoomID = respone.RoomID,
+                BitmapString = Manager.BitmapToString(bitmap),
+            };
+            sendToServer(message);
         }
 
         private void pictureBox_black_Click(object sender, EventArgs e)
