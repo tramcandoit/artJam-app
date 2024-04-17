@@ -193,6 +193,7 @@ namespace Server
 
         private void close_client(User user)
         {
+            Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
             Room requestingRoom = new Room();
 
             // xoá client khỏi cách list client và close client
@@ -214,12 +215,21 @@ namespace Server
                 Code = 1,
                 Username = "!" + user.Username
             };
-            foreach (User _user in requestingRoom.userList)
+            if (requestingRoom.userList.Count == 0)
             {
-                sendSpecific(_user, message);
+                if (roomList.Contains(requestingRoom))
+                {
+                    roomList.Remove(requestingRoom);
+                    Manager.WriteToLog("Đã xoá phòng: " + requestingRoom.roomID + " do không còn người dùng trong phòng.");
+                }
             }
-
-            Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
+            else
+            {
+                foreach (User _user in requestingRoom.userList)
+                {
+                    sendSpecific(_user, message);
+                }
+            }
             Manager.UpdateRoomCount(roomList.Count);
             Manager.UpdateUserCount(userList.Count);
         }

@@ -28,12 +28,12 @@ namespace Server
             {
                 Log.Invoke(new Action(() =>
                 {
-                    Log.Items.Add(line);
+                    Log.Items.Add(string.Format("{0}: {1}", DateTime.Now.ToString("HH:mm"), line));
                 }));
             }
             else
             {
-                Log.Items.Add(line);
+                Log.Items.Add(string.Format("{0}: {1}", DateTime.Now.ToString("HH:mm"), line));
             }
         }
 
