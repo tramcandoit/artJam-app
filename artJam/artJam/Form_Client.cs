@@ -14,6 +14,7 @@ using System.Text;
 using System.Runtime.CompilerServices;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 //using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace artJam
@@ -28,6 +29,7 @@ namespace artJam
         private int cursorX = -1;
         private int cursorY = -1;
         private Point p = new Point();
+        private Color stateColor;
 
         private TcpClient client;
         private StreamReader reader;
@@ -50,8 +52,10 @@ namespace artJam
             graphics.Clear(Color.White);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Canvas.Image = bitmap;
-            cursorPen = new Pen(Color.Black, 2);
+            stateColor = Color.Black;
+            cursorPen = new Pen(stateColor, 2);
             PenOptimizer(cursorPen);
+            this.ActiveControl = null;
 
             this_client_info = new Packet()
             {
@@ -63,6 +67,7 @@ namespace artJam
             isOffline = mode;
             if (!isOffline)
             {
+                textBox_room_code.Visible = true;
                 serverIP = new IPEndPoint(IPAddress.Parse(_serverIP), 9999);
             }
 
@@ -218,6 +223,15 @@ namespace artJam
         {
             PictureBox color = (PictureBox)sender;
             cursorPen.Color = color.BackColor;
+            if (color.BackColor != Color.White)
+            {
+                stateColor = color.BackColor;
+            }
+            else
+            {
+                shapeTag = 10;
+            }
+            pictureBox_picking_color.BackColor = stateColor;
         }
 
         private void button_pen_width_Click(object sender, EventArgs e)
@@ -232,6 +246,7 @@ namespace artJam
         {
             Button button = (Button)sender;
             shapeTag = Convert.ToInt32(button.Tag);
+            cursorPen.Color = stateColor;
         }
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
@@ -246,7 +261,7 @@ namespace artJam
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (cursorX != -1 && cursorY != -1 && cursorMoving == true && shapeTag == 10)
+            if (cursorX != -1 && cursorY != -1 && cursorMoving == true && (shapeTag == 10))
             {
                 p = e.Location;
 
@@ -325,6 +340,31 @@ namespace artJam
             pen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
         }
 
+        private void button_save_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFile = new SaveFileDialog();
+            saveFile.Filter = "Image (*.png) |*.png| (*.*) |*.*";
+            if (saveFile.ShowDialog() == DialogResult.OK)
+            {
+                Bitmap btm = bitmap.Clone(new Rectangle(0, 0, Canvas.Width, Canvas.Height), bitmap.PixelFormat);
+                btm.Save(saveFile.FileName, ImageFormat.Png);
+            }
+        }
+
+        int _temp = 0;
+        private void textBox_room_code_Click(object sender, EventArgs e)
+        {
+            _temp++;
+            if (_temp % 2 == 0)
+            {
+                listView_room_users.Visible = false;
+            }
+            else
+            {
+                listView_room_users.Visible = true;
+            }
+        }
+
         private void Form_Client_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (!isOffline)
@@ -333,5 +373,7 @@ namespace artJam
             }
             Application.OpenForms["Form_Home"].Close();
         }
+
+        
     }
 }
