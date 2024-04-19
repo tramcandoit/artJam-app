@@ -44,7 +44,7 @@
             this.label_room_count.AutoSize = true;
             this.label_room_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_room_count.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label_room_count.Location = new System.Drawing.Point(579, 88);
+            this.label_room_count.Location = new System.Drawing.Point(395, 340);
             this.label_room_count.Name = "label_room_count";
             this.label_room_count.Size = new System.Drawing.Size(132, 23);
             this.label_room_count.TabIndex = 0;
@@ -55,7 +55,7 @@
             this.textBox_room_count.BackColor = System.Drawing.SystemColors.Window;
             this.textBox_room_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_room_count.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.textBox_room_count.Location = new System.Drawing.Point(717, 83);
+            this.textBox_room_count.Location = new System.Drawing.Point(533, 335);
             this.textBox_room_count.Name = "textBox_room_count";
             this.textBox_room_count.ReadOnly = true;
             this.textBox_room_count.Size = new System.Drawing.Size(71, 30);
@@ -103,7 +103,7 @@
             this.listView_log.HideSelection = false;
             this.listView_log.Location = new System.Drawing.Point(243, 12);
             this.listView_log.Name = "listView_log";
-            this.listView_log.Size = new System.Drawing.Size(316, 426);
+            this.listView_log.Size = new System.Drawing.Size(528, 295);
             this.listView_log.TabIndex = 4;
             this.listView_log.UseCompatibleStateImageBehavior = false;
             this.listView_log.View = System.Windows.Forms.View.List;
@@ -126,7 +126,7 @@
             this.label_user_count.AutoSize = true;
             this.label_user_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_user_count.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.label_user_count.Location = new System.Drawing.Point(598, 138);
+            this.label_user_count.Location = new System.Drawing.Point(414, 390);
             this.label_user_count.Name = "label_user_count";
             this.label_user_count.Size = new System.Drawing.Size(113, 23);
             this.label_user_count.TabIndex = 6;
@@ -137,7 +137,7 @@
             this.textBox_user_count.BackColor = System.Drawing.SystemColors.Window;
             this.textBox_user_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_user_count.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.textBox_user_count.Location = new System.Drawing.Point(717, 130);
+            this.textBox_user_count.Location = new System.Drawing.Point(533, 382);
             this.textBox_user_count.Name = "textBox_user_count";
             this.textBox_user_count.ReadOnly = true;
             this.textBox_user_count.Size = new System.Drawing.Size(71, 30);
