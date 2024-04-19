@@ -34,6 +34,10 @@
             this.listView_room_users = new System.Windows.Forms.ListView();
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.panel_top = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button_save = new System.Windows.Forms.Button();
+            this.pictureBox_picking_color = new System.Windows.Forms.PictureBox();
+            this.pictureBox_eraser = new System.Windows.Forms.PictureBox();
             this.button_pen = new System.Windows.Forms.Button();
             this.label_tools = new System.Windows.Forms.Label();
             this.label_shapes = new System.Windows.Forms.Label();
@@ -53,13 +57,11 @@
             this.pictureBox_blue = new System.Windows.Forms.PictureBox();
             this.pictureBox_orange = new System.Windows.Forms.PictureBox();
             this.pictureBox_fuchsia = new System.Windows.Forms.PictureBox();
-            this.pictureBox_eraser = new System.Windows.Forms.PictureBox();
-            this.pictureBox_picking_color = new System.Windows.Forms.PictureBox();
-            this.button_save = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel_main.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.panel_top.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_picking_color)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eraser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).BeginInit();
@@ -68,8 +70,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eraser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_picking_color)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_main
@@ -157,6 +157,54 @@
             this.panel_top.Name = "panel_top";
             this.panel_top.Size = new System.Drawing.Size(882, 111);
             this.panel_top.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 82);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 20);
+            this.label1.TabIndex = 22;
+            this.label1.Text = "Save";
+            // 
+            // button_save
+            // 
+            this.button_save.BackColor = System.Drawing.Color.Transparent;
+            this.button_save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button_save.FlatAppearance.BorderSize = 0;
+            this.button_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_save.Image = ((System.Drawing.Image)(resources.GetObject("button_save.Image")));
+            this.button_save.Location = new System.Drawing.Point(25, 21);
+            this.button_save.Name = "button_save";
+            this.button_save.Size = new System.Drawing.Size(50, 50);
+            this.button_save.TabIndex = 21;
+            this.button_save.Tag = "";
+            this.button_save.UseVisualStyleBackColor = false;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
+            // 
+            // pictureBox_picking_color
+            // 
+            this.pictureBox_picking_color.BackColor = System.Drawing.Color.Black;
+            this.pictureBox_picking_color.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_picking_color.Location = new System.Drawing.Point(649, 17);
+            this.pictureBox_picking_color.Name = "pictureBox_picking_color";
+            this.pictureBox_picking_color.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_picking_color.TabIndex = 20;
+            this.pictureBox_picking_color.TabStop = false;
+            // 
+            // pictureBox_eraser
+            // 
+            this.pictureBox_eraser.BackColor = System.Drawing.Color.White;
+            this.pictureBox_eraser.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox_eraser.BackgroundImage")));
+            this.pictureBox_eraser.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox_eraser.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_eraser.Image")));
+            this.pictureBox_eraser.Location = new System.Drawing.Point(209, 21);
+            this.pictureBox_eraser.Name = "pictureBox_eraser";
+            this.pictureBox_eraser.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox_eraser.TabIndex = 19;
+            this.pictureBox_eraser.TabStop = false;
+            this.pictureBox_eraser.Tag = "";
+            this.pictureBox_eraser.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
             // button_pen
             // 
@@ -387,54 +435,6 @@
             this.pictureBox_fuchsia.TabStop = false;
             this.pictureBox_fuchsia.Click += new System.EventHandler(this.pictureBox_black_Click);
             // 
-            // pictureBox_eraser
-            // 
-            this.pictureBox_eraser.BackColor = System.Drawing.Color.White;
-            this.pictureBox_eraser.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox_eraser.BackgroundImage")));
-            this.pictureBox_eraser.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_eraser.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_eraser.Image")));
-            this.pictureBox_eraser.Location = new System.Drawing.Point(209, 21);
-            this.pictureBox_eraser.Name = "pictureBox_eraser";
-            this.pictureBox_eraser.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox_eraser.TabIndex = 19;
-            this.pictureBox_eraser.TabStop = false;
-            this.pictureBox_eraser.Tag = "";
-            this.pictureBox_eraser.Click += new System.EventHandler(this.pictureBox_black_Click);
-            // 
-            // pictureBox_picking_color
-            // 
-            this.pictureBox_picking_color.BackColor = System.Drawing.Color.Black;
-            this.pictureBox_picking_color.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox_picking_color.Location = new System.Drawing.Point(649, 17);
-            this.pictureBox_picking_color.Name = "pictureBox_picking_color";
-            this.pictureBox_picking_color.Size = new System.Drawing.Size(50, 50);
-            this.pictureBox_picking_color.TabIndex = 20;
-            this.pictureBox_picking_color.TabStop = false;
-            // 
-            // button_save
-            // 
-            this.button_save.BackColor = System.Drawing.Color.Transparent;
-            this.button_save.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button_save.FlatAppearance.BorderSize = 0;
-            this.button_save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_save.Image = ((System.Drawing.Image)(resources.GetObject("button_save.Image")));
-            this.button_save.Location = new System.Drawing.Point(25, 21);
-            this.button_save.Name = "button_save";
-            this.button_save.Size = new System.Drawing.Size(50, 50);
-            this.button_save.TabIndex = 21;
-            this.button_save.Tag = "";
-            this.button_save.UseVisualStyleBackColor = false;
-            this.button_save.Click += new System.EventHandler(this.button_save_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 82);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 20);
-            this.label1.TabIndex = 22;
-            this.label1.Text = "Save";
-            // 
             // Form_Client
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -444,6 +444,7 @@
             this.Font = new System.Drawing.Font("Gadugi", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.DimGray;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form_Client";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -455,6 +456,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.panel_top.ResumeLayout(false);
             this.panel_top.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_picking_color)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eraser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_lime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_black)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_cyan)).EndInit();
@@ -463,8 +466,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_blue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_orange)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_fuchsia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_eraser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_picking_color)).EndInit();
             this.ResumeLayout(false);
 
         }

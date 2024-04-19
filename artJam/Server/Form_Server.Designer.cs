@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Server));
             this.label_room_count = new System.Windows.Forms.Label();
             this.textBox_room_count = new System.Windows.Forms.TextBox();
             this.button_start_server = new System.Windows.Forms.Button();
@@ -42,7 +43,7 @@
             // label_room_count
             // 
             this.label_room_count.AutoSize = true;
-            this.label_room_count.Location = new System.Drawing.Point(585, 86);
+            this.label_room_count.Location = new System.Drawing.Point(677, 86);
             this.label_room_count.Name = "label_room_count";
             this.label_room_count.Size = new System.Drawing.Size(111, 16);
             this.label_room_count.TabIndex = 0;
@@ -51,7 +52,7 @@
             // textBox_room_count
             // 
             this.textBox_room_count.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox_room_count.Location = new System.Drawing.Point(717, 83);
+            this.textBox_room_count.Location = new System.Drawing.Point(717, 114);
             this.textBox_room_count.Name = "textBox_room_count";
             this.textBox_room_count.ReadOnly = true;
             this.textBox_room_count.Size = new System.Drawing.Size(71, 22);
@@ -89,9 +90,9 @@
             // listView_log
             // 
             this.listView_log.HideSelection = false;
-            this.listView_log.Location = new System.Drawing.Point(243, 12);
+            this.listView_log.Location = new System.Drawing.Point(226, 12);
             this.listView_log.Name = "listView_log";
-            this.listView_log.Size = new System.Drawing.Size(316, 426);
+            this.listView_log.Size = new System.Drawing.Size(402, 426);
             this.listView_log.TabIndex = 4;
             this.listView_log.UseCompatibleStateImageBehavior = false;
             this.listView_log.View = System.Windows.Forms.View.List;
@@ -109,7 +110,7 @@
             // label_user_count
             // 
             this.label_user_count.AutoSize = true;
-            this.label_user_count.Location = new System.Drawing.Point(565, 133);
+            this.label_user_count.Location = new System.Drawing.Point(649, 162);
             this.label_user_count.Name = "label_user_count";
             this.label_user_count.Size = new System.Drawing.Size(139, 16);
             this.label_user_count.TabIndex = 6;
@@ -118,7 +119,7 @@
             // textBox_user_count
             // 
             this.textBox_user_count.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox_user_count.Location = new System.Drawing.Point(717, 130);
+            this.textBox_user_count.Location = new System.Drawing.Point(719, 193);
             this.textBox_user_count.Name = "textBox_user_count";
             this.textBox_user_count.ReadOnly = true;
             this.textBox_user_count.Size = new System.Drawing.Size(71, 22);
@@ -128,7 +129,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.ClientSize = new System.Drawing.Size(802, 453);
             this.Controls.Add(this.textBox_user_count);
             this.Controls.Add(this.label_user_count);
             this.Controls.Add(this.button_get_server_IP);
@@ -138,6 +140,8 @@
             this.Controls.Add(this.button_start_server);
             this.Controls.Add(this.textBox_room_count);
             this.Controls.Add(this.label_room_count);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Server";
             this.Text = "Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Server_FormClosed);

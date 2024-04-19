@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using Newtonsoft.Json;
-using System.Runtime.Remoting.Messaging;
-using System.Runtime.InteropServices.ComTypes;
-using System.Threading.Tasks;
 using System.Net.NetworkInformation;
 
 namespace Server
@@ -42,6 +34,7 @@ namespace Server
             Manager.WriteToLog("Server bắt đầu lắng nghe...");
 
             this.button_start_server.Enabled = false;
+            this.button_stop_server.Enabled = true;
         }
 
         private void button_stop_server_Click(object sender, EventArgs e)
@@ -52,6 +45,8 @@ namespace Server
                 user.Client.Close();
             }
             listener.Stop();
+
+            this.button_stop_server.Enabled = false;
         }
 
         private void button_get_server_IP_Click(object sender, EventArgs e)
@@ -103,13 +98,13 @@ namespace Server
                             join_room_handler(user, request);
                             break;
                         case 2:
-                            send_graphics_handler(user, request);
-                            break;
-                        case 3:
                             sync_bitmap_handler(user, request);
                             break;
-                        case 4:
+                        case 3:
                             send_bitmap_handler(user, request);
+                            break;
+                        case 4:
+                            send_graphics_handler(user, request);
                             break;
                     }
                 }
@@ -149,10 +144,9 @@ namespace Server
 
         private void join_room_handler(User user, Packet request)
         {
-            int id = int.Parse(request.RoomID.ToString());
-            //
             bool roomExist = false;
-            //
+
+            int id = int.Parse(request.RoomID.ToString());
             Room requestingRoom = new Room();
             foreach (Room room in roomList)
             {
@@ -163,6 +157,7 @@ namespace Server
                     break;
                 }
             }
+
             if (!roomExist)
             {
                 request.Username = "err:thisroomdoesnotexist";
@@ -183,28 +178,6 @@ namespace Server
 
             Manager.WriteToLog("Phòng " + request.RoomID + ": " + user.Username + " tham gia");
             Manager.UpdateUserCount(userList.Count);
-        }
-
-        private void send_graphics_handler(User user, Packet request)
-        {
-            int id = int.Parse(request.RoomID.ToString());
-            Room requestingRoom = new Room();
-            foreach (Room room in roomList)
-            {
-                if (room.roomID == id)
-                {
-                    requestingRoom = room;
-                    break;
-                }
-            }
-
-            foreach (User _user in requestingRoom.userList)
-            {
-                if (_user != user)
-                {
-                    sendSpecific(_user, request);
-                }
-            }
         }
 
         private void sync_bitmap_handler(User user, Packet request)
@@ -241,6 +214,28 @@ namespace Server
             sendSpecific(_user, request);
         }
 
+        private void send_graphics_handler(User user, Packet request)
+        {
+            int id = int.Parse(request.RoomID.ToString());
+            Room requestingRoom = new Room();
+            foreach (Room room in roomList)
+            {
+                if (room.roomID == id)
+                {
+                    requestingRoom = room;
+                    break;
+                }
+            }
+
+            foreach (User _user in requestingRoom.userList)
+            {
+                if (_user != user)
+                {
+                    sendSpecific(_user, request);
+                }
+            }
+        }
+
         private void close_client(User user)
         {
             Room requestingRoom = new Room();
@@ -274,7 +269,7 @@ namespace Server
                 if (roomList.Contains(requestingRoom))
                 {
                     roomList.Remove(requestingRoom);
-                    Manager.WriteToLog("Đã xoá phòng: " + requestingRoom.roomID + " do không còn người dùng trong phòng.");
+                    Manager.WriteToLog("Đã xoá phòng: " + requestingRoom.roomID + " do không user ở trong");
                 }
             }
             else

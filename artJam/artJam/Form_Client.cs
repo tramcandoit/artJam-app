@@ -5,17 +5,10 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
-using System.Text;
-using System.Runtime.CompilerServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
-using System.ComponentModel;
 using System.Drawing.Imaging;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace artJam
 {
@@ -30,6 +23,7 @@ namespace artJam
         private int cursorY = -1;
         private Point p = new Point();
         private Color stateColor;
+        private int shapeTag = 10;
 
         private TcpClient client;
         private StreamReader reader;
@@ -37,7 +31,6 @@ namespace artJam
         private Packet this_client_info;
         private IPEndPoint serverIP;
         private Manager Manager;
-
         private bool isOffline;
         private bool isNew;
 
@@ -125,13 +118,13 @@ namespace artJam
                             join_room_status(response);
                             break;
                         case 2:
-                            draw_graphics_handler(response);
-                            break;
-                        case 3:
                             sync_bitmap_status(response);
                             break;
-                        case 4:
+                        case 3:
                             draw_bitmap_handler(response);
+                            break;
+                        case 4:
+                            draw_graphics_handler(response);
                             break;
                     }
                 }
@@ -154,11 +147,12 @@ namespace artJam
             {
                 sendToServer(new Packet
                 {
-                    Code = 3,
+                    Code = 2,
                     RoomID = response.RoomID,
                 });
                 isNew = false;
             }
+
             if (response.Username == "err:thisroomdoesnotexist")
             {
                 Manager.ShowError("Phòng bạn yêu cầu không tồn tại!");
@@ -166,11 +160,11 @@ namespace artJam
                 this.Close();
                 return;
             }
+
             if (response.Username.Contains('!'))
             {
                 Manager.RemoveFromUserListView(response.Username.Substring(1));
             }
-
             else
             {
                 List<string> list = response.Username.Split(',').ToList();
@@ -188,6 +182,29 @@ namespace artJam
                     Manager.AddToUserListView(username);
                 }
             }
+        }
+
+        private void sync_bitmap_status(Packet respone)
+        {
+            Packet message = new Packet
+            {
+                Code = 3,
+                RoomID = respone.RoomID,
+                BitmapString = Manager.BitmapToString(bitmap),
+            };
+            sendToServer(message);
+        }
+
+        private void draw_bitmap_handler(Packet response)
+        {
+            Bitmap _bitmap = Manager.StringToBitmap(response.BitmapString);
+            bitmap = _bitmap;
+            graphics = Graphics.FromImage(bitmap);
+            Canvas.Image = bitmap;
+            context.Send(s =>
+            {
+                Canvas.Refresh();
+            }, null);
         }
 
         void draw_graphics_handler(Packet response)
@@ -242,66 +259,7 @@ namespace artJam
                 Canvas.Refresh();
             }, null);
         }
-
-        private void draw_bitmap_handler(Packet response)
-        {
-            try
-            {
-                Bitmap _bitmap = Manager.StringToBitmap(response.BitmapString);
-                bitmap = _bitmap;
-                graphics = Graphics.FromImage(bitmap);
-                Canvas.Image = bitmap;
-                context.Send(s =>
-                {
-                    Canvas.Refresh();
-                }, null);
-            }
-            catch
-            {
-                Manager.ShowError("Vui lòng đợi một chút");
-            }
-        }
-
-        private void sync_bitmap_status(Packet respone)
-        {
-            Packet message = new Packet
-            {
-                Code = 4,
-                RoomID = respone.RoomID,
-                BitmapString = Manager.BitmapToString(bitmap),
-            };
-            sendToServer(message);
-        }
-
-        private void pictureBox_black_Click(object sender, EventArgs e)
-        {
-            PictureBox color = (PictureBox)sender;
-            cursorPen.Color = color.BackColor;
-            if (color.BackColor != Color.White)
-            {
-                stateColor = color.BackColor;
-            }
-            else
-            {
-                shapeTag = 10;
-            }
-            pictureBox_picking_color.BackColor = stateColor;
-        }
-
-        private void button_pen_width_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            cursorPen.Width = Convert.ToInt32(button.Tag);
-        }
-
-        private int shapeTag = 10;
-
-        private void button_shapes_Click(object sender, EventArgs e)
-        {
-            Button button = (Button)sender;
-            shapeTag = Convert.ToInt32(button.Tag);
-            cursorPen.Color = stateColor;
-        }
+        
         private void Canvas_MouseDown(object sender, MouseEventArgs e)
         {
             cursorMoving = true;
@@ -327,7 +285,10 @@ namespace artJam
                 cursorX = e.X;
                 cursorY = e.Y;
             }
-            Canvas.Refresh();
+            context.Send(s =>
+            {
+                Canvas.Refresh();
+            }, null);
         }
 
         private void Canvas_MouseUp(object sender, MouseEventArgs e)
@@ -347,13 +308,16 @@ namespace artJam
             {
                 graphics.DrawEllipse(cursorPen, cursorX, cursorY, w, h);
             }
-            Canvas.Refresh();
+            context.Send(s =>
+            {
+                Canvas.Refresh();
+            }, null);
 
             float[] pos = new float[] { cursorX, cursorY, w, h };
 
             Packet messsage = new Packet
             {
-                Code = 2,
+                Code = 4,
                 Username = this_client_info.Username,
                 RoomID = this_client_info.RoomID,
                 PenColor = cursorPen.Color.Name,
@@ -363,6 +327,7 @@ namespace artJam
                 Points_2 = points_2,
                 Position = pos
             };
+
             if (!isOffline)
             {
                 sendToServer(messsage);
@@ -374,6 +339,7 @@ namespace artJam
             points_1.Clear();
             points_2.Clear();
         }
+
         private void sendToServer(Packet message)
         {
             string messageInJson = JsonConvert.SerializeObject(message);
@@ -386,6 +352,35 @@ namespace artJam
             {
                 Manager.ShowError("Gửi gói tin đến server thất bại!");
             }
+        }
+
+        private void pictureBox_black_Click(object sender, EventArgs e)
+        {
+            PictureBox color = (PictureBox)sender;
+            cursorPen.Color = color.BackColor;
+            if (color.BackColor != Color.White)
+            {
+                stateColor = color.BackColor;
+            }
+            else
+            {
+                shapeTag = 10;
+            }
+            pictureBox_picking_color.BackColor = stateColor;
+        }
+
+        private void button_pen_width_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            cursorPen.Width = Convert.ToInt32(button.Tag);
+        }
+
+
+        private void button_shapes_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            shapeTag = Convert.ToInt32(button.Tag);
+            cursorPen.Color = stateColor;
         }
 
         private void PenOptimizer(Pen pen)
@@ -427,7 +422,5 @@ namespace artJam
             }
             Application.OpenForms["Form_Home"].Close();
         }
-
-        
     }
 }
