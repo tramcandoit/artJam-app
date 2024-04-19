@@ -97,17 +97,17 @@ namespace artJam
         {
             if (richTextBox_nickname.Text == "")
             {
-                MessageBox.Show("Vui lòng nhập nickname!");
+                MessageBox.Show("Please enter nickname");
                 return;
             }
             if (richTextBox_nickname.Text.Contains("!"))
             {
-                MessageBox.Show("Nickname không được tồn tại ký tự chấm than (!)");
+                MessageBox.Show("Nicknames cannot contain exclamation marks (!)");
                 return;
             }
             if (!IPv4IsValid(textBox_server_IP.Text))
             {
-                MessageBox.Show("Vui lòng nhập IPv4 hợp lệ!");
+                MessageBox.Show("Please enter a valid IPv4 address");
                 return;
             }
 
@@ -122,23 +122,23 @@ namespace artJam
         {
             if (richTextBox_nickname.Text == "" || richTextBox_code_room.Text == "")
             {
-                MessageBox.Show("Vui lòng nhập nickname và mã phòng!");
+                MessageBox.Show("Please enter nickname and room code");
                 return;
             }
             if (!IPv4IsValid(textBox_server_IP.Text))
             {
-                MessageBox.Show("Vui lòng nhập IPv4 hợp lệ!");
+                MessageBox.Show("Please enter a valid IPv4 address");
                 return;
             }
             if (richTextBox_nickname.Text.Contains("!"))
             {
-                MessageBox.Show("Nickname không được tồn tại ký tự chấm than (!)");
+                MessageBox.Show("Nicknames cannot contain exclamation marks (!)");
                 return;
             }
             string check_roomID = richTextBox_code_room.Text;
             if (check_roomID.Length != 4 || check_roomID.Any(char.IsLetter))
             {
-                MessageBox.Show("Mã phòng không hợp lệ");
+                MessageBox.Show("Room code not valid");
                 return;
             }
 

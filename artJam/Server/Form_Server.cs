@@ -39,14 +39,14 @@ namespace Server
             clientListener.IsBackground = true;
             clientListener.Start();
 
-            Manager.WriteToLog("Server bắt đầu lắng nghe...");
+            Manager.WriteToLog("Start listening for incoming requests...");
 
             this.button_start_server.Enabled = false;
         }
 
         private void button_stop_server_Click(object sender, EventArgs e)
         {
-            Manager.WriteToLog("Đóng kết nối server...");
+            Manager.WriteToLog("Stop listening for incoming requests");
             foreach (User user in userList)
             {
                 user.Client.Close();
@@ -133,7 +133,7 @@ namespace Server
             newRoom.userList.Add(user);
             roomList.Add(newRoom);
 
-            Manager.WriteToLog(user.Username + " đã tạo phòng mới. Mã phòng: " + newRoom.roomID);
+            Manager.WriteToLog(user.Username + " created new room. Room code: " + newRoom.roomID);
             Manager.UpdateRoomCount(roomList.Count);
             Manager.UpdateUserCount(userList.Count);
 
@@ -181,7 +181,7 @@ namespace Server
                 sendSpecific(_user, request);
             }
 
-            Manager.WriteToLog("Phòng " + request.RoomID + ": " + user.Username + " tham gia");
+            Manager.WriteToLog("Room " + request.RoomID + ": " + user.Username + " joined");
             Manager.UpdateUserCount(userList.Count);
         }
 
@@ -260,7 +260,7 @@ namespace Server
 
             if (user.Username != string.Empty)
             {
-                Manager.WriteToLog(user.Username + " đã ngắt kết nối.");
+                Manager.WriteToLog(user.Username + " disconnected.");
             }
 
             // gửi thông báo về client vừa ngắt kết nối đến client khác trong phòng
@@ -274,7 +274,7 @@ namespace Server
                 if (roomList.Contains(requestingRoom))
                 {
                     roomList.Remove(requestingRoom);
-                    Manager.WriteToLog("Đã xoá phòng: " + requestingRoom.roomID + " do không còn người dùng trong phòng.");
+                    Manager.WriteToLog("Deleted room: " + requestingRoom.roomID + " - No user here.");
                 }
             }
             else
@@ -298,7 +298,7 @@ namespace Server
             }
             catch
             {
-                Manager.ShowError("Không gửi được gói tin đến user: " + user.Username);
+                Manager.ShowError("Cannot send data to user: " + user.Username);
             }
         }
 

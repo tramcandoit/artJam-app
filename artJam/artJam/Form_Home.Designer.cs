@@ -259,7 +259,7 @@
             this.Controls.Add(this.button_join_room);
             this.Controls.Add(this.button_create_room);
             this.Name = "Form_Home";
-            this.Text = "appJam";
+            this.Text = "artJam";
             this.panel_left.ResumeLayout(false);
             this.panel_left.PerformLayout();
             this.ResumeLayout(false);

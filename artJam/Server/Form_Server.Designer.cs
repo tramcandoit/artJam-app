@@ -42,52 +42,64 @@
             // label_room_count
             // 
             this.label_room_count.AutoSize = true;
-            this.label_room_count.Location = new System.Drawing.Point(585, 86);
+            this.label_room_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_room_count.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label_room_count.Location = new System.Drawing.Point(579, 88);
             this.label_room_count.Name = "label_room_count";
-            this.label_room_count.Size = new System.Drawing.Size(111, 16);
+            this.label_room_count.Size = new System.Drawing.Size(132, 23);
             this.label_room_count.TabIndex = 0;
-            this.label_room_count.Text = "Số phòng hiện có";
+            this.label_room_count.Text = "Available rooms";
             // 
             // textBox_room_count
             // 
             this.textBox_room_count.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_room_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_room_count.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.textBox_room_count.Location = new System.Drawing.Point(717, 83);
             this.textBox_room_count.Name = "textBox_room_count";
             this.textBox_room_count.ReadOnly = true;
-            this.textBox_room_count.Size = new System.Drawing.Size(71, 22);
+            this.textBox_room_count.Size = new System.Drawing.Size(71, 30);
             this.textBox_room_count.TabIndex = 1;
             // 
             // button_start_server
             // 
+            this.button_start_server.BackColor = System.Drawing.Color.IndianRed;
+            this.button_start_server.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_start_server.ForeColor = System.Drawing.Color.White;
             this.button_start_server.Location = new System.Drawing.Point(32, 72);
             this.button_start_server.Name = "button_start_server";
             this.button_start_server.Size = new System.Drawing.Size(166, 45);
             this.button_start_server.TabIndex = 2;
             this.button_start_server.Text = "Start";
-            this.button_start_server.UseVisualStyleBackColor = true;
+            this.button_start_server.UseVisualStyleBackColor = false;
             this.button_start_server.Click += new System.EventHandler(this.button_start_server_Click);
             // 
             // button_stop_server
             // 
+            this.button_stop_server.BackColor = System.Drawing.Color.IndianRed;
+            this.button_stop_server.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_stop_server.ForeColor = System.Drawing.Color.White;
             this.button_stop_server.Location = new System.Drawing.Point(32, 133);
             this.button_stop_server.Name = "button_stop_server";
             this.button_stop_server.Size = new System.Drawing.Size(166, 45);
             this.button_stop_server.TabIndex = 3;
             this.button_stop_server.Text = "Stop";
-            this.button_stop_server.UseVisualStyleBackColor = true;
+            this.button_stop_server.UseVisualStyleBackColor = false;
             this.button_stop_server.Click += new System.EventHandler(this.button_stop_server_Click);
             // 
             // textBox_server_local_IP
             // 
             this.textBox_server_local_IP.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_server_local_IP.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox_server_local_IP.Location = new System.Drawing.Point(32, 346);
             this.textBox_server_local_IP.Name = "textBox_server_local_IP";
             this.textBox_server_local_IP.ReadOnly = true;
-            this.textBox_server_local_IP.Size = new System.Drawing.Size(166, 22);
+            this.textBox_server_local_IP.Size = new System.Drawing.Size(166, 30);
             this.textBox_server_local_IP.TabIndex = 4;
             // 
             // listView_log
             // 
+            this.listView_log.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.listView_log.HideSelection = false;
             this.listView_log.Location = new System.Drawing.Point(243, 12);
             this.listView_log.Name = "listView_log";
@@ -98,30 +110,37 @@
             // 
             // button_get_server_IP
             // 
+            this.button_get_server_IP.BackColor = System.Drawing.Color.IndianRed;
+            this.button_get_server_IP.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button_get_server_IP.ForeColor = System.Drawing.Color.White;
             this.button_get_server_IP.Location = new System.Drawing.Point(32, 282);
             this.button_get_server_IP.Name = "button_get_server_IP";
             this.button_get_server_IP.Size = new System.Drawing.Size(166, 45);
             this.button_get_server_IP.TabIndex = 5;
-            this.button_get_server_IP.Text = "Lấy IP server";
-            this.button_get_server_IP.UseVisualStyleBackColor = true;
+            this.button_get_server_IP.Text = "Get server\'s IP address";
+            this.button_get_server_IP.UseVisualStyleBackColor = false;
             this.button_get_server_IP.Click += new System.EventHandler(this.button_get_server_IP_Click);
             // 
             // label_user_count
             // 
             this.label_user_count.AutoSize = true;
-            this.label_user_count.Location = new System.Drawing.Point(565, 133);
+            this.label_user_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_user_count.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label_user_count.Location = new System.Drawing.Point(598, 138);
             this.label_user_count.Name = "label_user_count";
-            this.label_user_count.Size = new System.Drawing.Size(139, 16);
+            this.label_user_count.Size = new System.Drawing.Size(113, 23);
             this.label_user_count.TabIndex = 6;
-            this.label_user_count.Text = "Số người dùng hiện có";
+            this.label_user_count.Text = "Existing users";
             // 
             // textBox_user_count
             // 
             this.textBox_user_count.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox_user_count.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_user_count.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.textBox_user_count.Location = new System.Drawing.Point(717, 130);
             this.textBox_user_count.Name = "textBox_user_count";
             this.textBox_user_count.ReadOnly = true;
-            this.textBox_user_count.Size = new System.Drawing.Size(71, 22);
+            this.textBox_user_count.Size = new System.Drawing.Size(71, 30);
             this.textBox_user_count.TabIndex = 7;
             // 
             // Server

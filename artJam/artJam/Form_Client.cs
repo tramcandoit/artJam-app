@@ -87,7 +87,7 @@ namespace artJam
                 }
                 catch
                 {
-                    Manager.ShowError("Không thể kết nối đến server!");
+                    Manager.ShowError("Can not connect to the server!");
                     this.Close();
                     return;
                 }
@@ -97,7 +97,7 @@ namespace artJam
 
                 sendToServer(this_client_info);
                 Manager.UpdateRoomID(this_client_info.RoomID);
-                Manager.AddToUserListView(this_client_info.Username + " (bạn)");
+                Manager.AddToUserListView(this_client_info.Username + " (you)");
 
                 Thread listen = new Thread(Receive);
                 listen.IsBackground = true;
@@ -161,7 +161,7 @@ namespace artJam
             }
             if (response.Username == "err:thisroomdoesnotexist")
             {
-                Manager.ShowError("Phòng bạn yêu cầu không tồn tại!");
+                Manager.ShowError("The room you requested does not exist");
                 client.Close();
                 this.Close();
                 return;
@@ -258,7 +258,7 @@ namespace artJam
             }
             catch
             {
-                Manager.ShowError("Vui lòng đợi một chút");
+                Manager.ShowError("Please wait...");
             }
         }
 
@@ -384,7 +384,7 @@ namespace artJam
             }
             catch
             {
-                Manager.ShowError("Gửi gói tin đến server thất bại!");
+                Manager.ShowError("Failed to send data to server!");
             }
         }
 
