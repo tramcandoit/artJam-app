@@ -197,21 +197,14 @@ namespace artJam
 
         private void draw_bitmap_handler(Packet response)
         {
-            try
+            Bitmap _bitmap = Manager.StringToBitmap(response.BitmapString);
+            bitmap = _bitmap;
+            graphics = Graphics.FromImage(bitmap);
+            Canvas.Image = bitmap;
+            context.Send(s =>
             {
-                Bitmap _bitmap = Manager.StringToBitmap(response.BitmapString);
-                bitmap = _bitmap;
-                graphics = Graphics.FromImage(bitmap);
-                Canvas.Image = bitmap;
-                context.Send(s =>
-                {
-                    Canvas.Refresh();
-                }, null);
-            }
-            catch
-            {
-                Manager.ShowError("Please wait...");
-            }
+                Canvas.Refresh();
+            }, null);
         }
 
         void draw_graphics_handler(Packet response)
