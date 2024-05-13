@@ -139,6 +139,7 @@ namespace artJam
         {
             this_client_info.RoomID = response.RoomID;
             Manager.UpdateRoomID(this_client_info.RoomID);
+            isNew = false;
         }
 
         void join_room_status(Packet response)

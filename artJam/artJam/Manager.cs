@@ -77,12 +77,12 @@ namespace artJam
             {
                 RoomID.Invoke(new Action(() =>
                 {
-                    RoomID.Text = "Phòng: " + roomID;
+                    RoomID.Text = "Room: " + roomID;
                 }));
             }
             else
             {
-                RoomID.Text = "Phòng: " + roomID;
+                RoomID.Text = "Room: " + roomID;
             }
         }
         public string BitmapToString(Bitmap bitmap)
@@ -108,7 +108,7 @@ namespace artJam
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
