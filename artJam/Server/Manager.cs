@@ -65,7 +65,7 @@ namespace Server
 
         public void ShowError(string message)
         {
-            MessageBox.Show(message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public string GetLocalIPv4(NetworkInterfaceType type)

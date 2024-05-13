@@ -51,6 +51,7 @@
             // 
             this.button_create_room.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_create_room.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_create_room.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_create_room.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_create_room.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_create_room.ForeColor = System.Drawing.Color.White;
@@ -68,6 +69,7 @@
             // 
             this.button_join_room.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_join_room.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_join_room.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_join_room.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_join_room.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_join_room.ForeColor = System.Drawing.Color.White;
@@ -136,6 +138,7 @@
             // button_go_join_room
             // 
             this.button_go_join_room.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_go_join_room.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_go_join_room.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_go_join_room.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_go_join_room.ForeColor = System.Drawing.Color.White;
@@ -152,6 +155,7 @@
             // button_go_create_room
             // 
             this.button_go_create_room.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_go_create_room.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_go_create_room.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_go_create_room.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_go_create_room.ForeColor = System.Drawing.Color.White;
@@ -169,6 +173,7 @@
             // 
             this.button_start.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_start.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_start.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_start.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_start.ForeColor = System.Drawing.Color.White;
@@ -185,6 +190,7 @@
             // 
             this.button_mode_offline.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_mode_offline.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_mode_offline.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_mode_offline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_mode_offline.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_mode_offline.ForeColor = System.Drawing.Color.Transparent;
@@ -202,6 +208,7 @@
             // 
             this.button_mode_LAN.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_mode_LAN.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_mode_LAN.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_mode_LAN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_mode_LAN.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_mode_LAN.ForeColor = System.Drawing.Color.White;
@@ -260,6 +267,7 @@
             // 
             this.button_go_create_canvas.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.button_go_create_canvas.BackColor = System.Drawing.Color.DodgerBlue;
+            this.button_go_create_canvas.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_go_create_canvas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_go_create_canvas.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_go_create_canvas.ForeColor = System.Drawing.Color.White;

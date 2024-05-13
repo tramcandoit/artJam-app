@@ -67,6 +67,7 @@
             // button_start_server
             // 
             this.button_start_server.BackColor = System.Drawing.Color.IndianRed;
+            this.button_start_server.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_start_server.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_start_server.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_start_server.ForeColor = System.Drawing.Color.White;
@@ -82,6 +83,7 @@
             // button_stop_server
             // 
             this.button_stop_server.BackColor = System.Drawing.Color.IndianRed;
+            this.button_stop_server.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_stop_server.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_stop_server.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_stop_server.ForeColor = System.Drawing.Color.White;
@@ -121,6 +123,7 @@
             // button_get_server_IP
             // 
             this.button_get_server_IP.BackColor = System.Drawing.Color.IndianRed;
+            this.button_get_server_IP.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button_get_server_IP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.button_get_server_IP.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button_get_server_IP.ForeColor = System.Drawing.Color.White;
